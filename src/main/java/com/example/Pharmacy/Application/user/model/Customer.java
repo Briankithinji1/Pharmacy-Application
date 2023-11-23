@@ -1,7 +1,7 @@
 package com.example.Pharmacy.Application.user.model;
 
-import com.example.Pharmacy.Application.cart.CartItem;
-import com.example.Pharmacy.Application.order.OrderItem;
+import com.example.Pharmacy.Application.cart.model.Cart;
+import com.example.Pharmacy.Application.order.model.Order;
 import com.example.Pharmacy.Application.prescription.Prescription;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,10 +27,10 @@ public class Customer extends User {
     private List<Prescription> prescriptions;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItemList;
+    private List<Order> orderList;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<CartItem> cartItemList;
+    private List<Cart> cartList;
 
     @ManyToMany
     @JoinTable(

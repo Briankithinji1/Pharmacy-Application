@@ -30,15 +30,16 @@ public class Prescription {
     @JoinColumn(name = "customerId")
     private Customer customer;
 
-    @ManyToMany
-    @JoinTable(
-            name = "prescription_product",
-            joinColumns = @JoinColumn(name = "prescriptionId"),
-            inverseJoinColumns = @JoinColumn(name = "productId"),
-            indexes = {
-                    @Index(name = "idx_prescription_product_prescription_id", columnList = "prescriptionId"),
-                    @Index(name = "idx_prescription_product_product_id", columnList = "productId")
-            }
-    )
+//    @ManyToMany
+//    @JoinTable(
+//            name = "prescription_product",
+//            joinColumns = @JoinColumn(name = "prescriptionId"),
+//            inverseJoinColumns = @JoinColumn(name = "productId"),
+//            indexes = {
+//                    @Index(name = "idx_prescription_product_prescription_id", columnList = "prescriptionId"),
+//                    @Index(name = "idx_prescription_product_product_id", columnList = "productId")
+//            }
+//    )
+    @OneToMany(mappedBy = "prescription")
     private List<Product> medicine;
 }

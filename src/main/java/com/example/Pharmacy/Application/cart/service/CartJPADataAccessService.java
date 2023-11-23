@@ -1,5 +1,9 @@
-package com.example.Pharmacy.Application.cart;
+package com.example.Pharmacy.Application.cart.service;
 
+import com.example.Pharmacy.Application.cart.repository.CartRepository;
+import com.example.Pharmacy.Application.cart.dao.CartDao;
+import com.example.Pharmacy.Application.cart.model.Cart;
+import com.example.Pharmacy.Application.user.model.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -17,14 +21,25 @@ public class CartJPADataAccessService implements CartDao {
     }
 
     @Override
-    public List<CartItem> selectAllCarts() {
-        Page<CartItem> page = cartRepository.findAll(Pageable.ofSize(1000));
+    public List<Cart> selectAllCarts() {
+        Page<Cart> page = cartRepository.findAll(Pageable.ofSize(1000));
         return page.getContent();
     }
 
     @Override
-    public Optional<CartItem> selectCartById(Long cartId) {
+    public Optional<Cart> selectCartById(Long cartId) {
         return cartRepository.findById(cartId);
+    }
+
+    // Added Today
+    @Override
+    public List<Cart> selectAllByCustomerOrderByCreatedDateDesc(Customer customer) {
+        return cartRepository.findAllByCustomerOrderByCreatedDateDesc(customer);
+    }
+
+    @Override
+    public void deleteByUser(Customer customer) {
+        cartRepository.deleteByUser(customer);
     }
 
 //    @Override
@@ -38,13 +53,13 @@ public class CartJPADataAccessService implements CartDao {
 //    }
 
     @Override
-    public void insertCart(CartItem cartItem) {
-        cartRepository.save(cartItem);
+    public void insertCart(Cart cart) {
+        cartRepository.save(cart);
     }
 
     @Override
-    public void updateCart(CartItem cartItem) {
-        cartRepository.save(cartItem);
+    public void updateCart(Cart cart) {
+        cartRepository.save(cart);
     }
 
     @Override
@@ -53,8 +68,23 @@ public class CartJPADataAccessService implements CartDao {
     }
 
     @Override
+    public void deleteCartItem(Long cartItemId) {
+        cartRepository.deleteById(cartItemId);
+    }
+
+    @Override
+    public void deleteCartItems(Long userId) {
+        cartRepository.deleteAll();
+    }
+
+    @Override
+    public void deleteCartItemsByUser(Customer customer) {
+        cartRepository.deleteByUser(customer);
+    }
+
+    @Override
     public boolean isCartExistsById(Long cartId) {
-        return cartRepository.existsCartByCartId(cartId);
+        return !cartRepository.existsCartByCartId(cartId);
     }
 
 //    @Override

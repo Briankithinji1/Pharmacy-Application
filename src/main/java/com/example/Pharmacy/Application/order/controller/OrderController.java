@@ -1,6 +1,12 @@
-package com.example.Pharmacy.Application.order;
+package com.example.Pharmacy.Application.order.controller;
 
+import com.example.Pharmacy.Application.order.dto.OrderDTO;
+import com.example.Pharmacy.Application.order.enums.OrderStatus;
+import com.example.Pharmacy.Application.order.service.OrderService;
+import com.example.Pharmacy.Application.order.model.Order;
+import com.example.Pharmacy.Application.user.model.Customer;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,9 +51,26 @@ public class OrderController {
 
     @PostMapping("addOrder")
     public ResponseEntity<?> addOrder(
-            @RequestBody OrderItem orderItem) {
-        orderService.addOrder(orderItem);
+            @RequestBody Order order) {
+        orderService.addOrder(order);
         return ResponseEntity.ok().build();
+    }
+
+    // Added Today
+    @PostMapping("placeOrder")
+    public ResponseEntity<?> placeOrder(
+            @RequestBody Customer customer
+            ) {
+        OrderDTO placedOrder = orderService.placeOrder(customer);
+        return new ResponseEntity<>(placedOrder, HttpStatus.CREATED);
+    }
+
+    @GetMapping("orderList")
+    public ResponseEntity<List<Order>> getAllOrdersList(
+            @RequestBody Customer customer
+    ) {
+        List<Order> orderList = orderService.listOrders(customer);
+        return new ResponseEntity<>(orderList, HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{orderId}")
@@ -59,14 +82,14 @@ public class OrderController {
     @PutMapping("update/{orderId}")
     public void updateOrder(
             @PathVariable("orderId") Long orderId,
-            @RequestBody OrderItem orderItem) {
-        orderService.updateOrder(orderId, orderItem);
+            @RequestBody Order order) {
+        orderService.updateOrder(orderId, order);
     }
 
     @PatchMapping("updateStatus/{orderId}")
     public void updateOrderStatus(
             @PathVariable("orderId") Long orderId,
-            @RequestBody String status) {
+            @RequestBody OrderStatus status) {
         orderService.updateOrderStatus(orderId, status);
     }
 }

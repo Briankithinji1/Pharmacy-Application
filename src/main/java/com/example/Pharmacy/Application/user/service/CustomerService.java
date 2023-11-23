@@ -1,10 +1,10 @@
 package com.example.Pharmacy.Application.user.service;
 
-import com.example.Pharmacy.Application.cart.CartStatus;
+import com.example.Pharmacy.Application.cart.enums.CartStatus;
 import com.example.Pharmacy.Application.exception.DuplicateResourceException;
 import com.example.Pharmacy.Application.exception.RequestValidationException;
 import com.example.Pharmacy.Application.exception.ResourceNotFoundException;
-import com.example.Pharmacy.Application.order.OrderStatus;
+import com.example.Pharmacy.Application.order.enums.OrderStatus;
 import com.example.Pharmacy.Application.user.dao.CustomerDao;
 import com.example.Pharmacy.Application.user.dto.CustomerDTO;
 import com.example.Pharmacy.Application.user.mapper.CustomerDTOMapper;
@@ -102,7 +102,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customer updateCustomer(Long userId, Customer customer) {
+    public void updateCustomer(Long userId, Customer customer) {
 
         Customer customer_s = customerDao.getCustomerByUserId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -158,6 +158,5 @@ public class CustomerService {
         }
 
         customerDao.updateCustomer(customer_s);
-        return customer;
     }
 }

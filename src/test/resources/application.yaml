@@ -1,14 +1,34 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
+  allowed-headers: "*"
+  exposed-headers: "*"
+
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-
+    url: jdbc:postgresql://localhost:5332/pharmacy
+    username: brycode
+    password: password
   jpa:
+    hibernate:
+      ddl-auto: create-drop
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+  main:
+    web-application-type: servlet
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
-  jpa.hibernate.ddl-auto: create-drop
+jwt:
+  secret-key: 0ddf5597e02d981f8803c4cc11f015a4e52679d706edb29b595d9e466def5bcf95273a3053ab5d97ee893c23e4023b912daefaade316406a33b7685d4d223dfa
+  expiration: 86400000
+  refresh-token-expiration: 604800000

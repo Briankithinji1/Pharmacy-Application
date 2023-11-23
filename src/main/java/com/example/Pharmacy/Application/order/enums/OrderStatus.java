@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.order;
+package com.example.Pharmacy.Application.order.enums;
 
 import java.util.Collections;
 import java.util.List;

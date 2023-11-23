@@ -1,5 +1,11 @@
-package com.example.Pharmacy.Application.order;
+package com.example.Pharmacy.Application.order.service;
 
+import com.example.Pharmacy.Application.cart.model.Cart;
+import com.example.Pharmacy.Application.order.dao.OrderDao;
+import com.example.Pharmacy.Application.order.enums.OrderStatus;
+import com.example.Pharmacy.Application.order.model.Order;
+import com.example.Pharmacy.Application.order.repository.OrderRepository;
+import com.example.Pharmacy.Application.user.model.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -17,13 +23,13 @@ public class OrderJPADataAccessService implements OrderDao {
     }
 
     @Override
-    public List<OrderItem> selectAllOrders() {
-        Page<OrderItem> page = orderRepository.findAll(Pageable.ofSize(1000));
+    public List<Order> selectAllOrders() {
+        Page<Order> page = orderRepository.findAll(Pageable.ofSize(1000));
         return page.getContent();
     }
 
     @Override
-    public Optional<OrderItem> selectAllOrdersByStatus(String status) {
+    public Optional<Order> selectAllOrdersByStatus(String status) {
         return orderRepository.findByStatus(status);
     }
 
@@ -33,23 +39,28 @@ public class OrderJPADataAccessService implements OrderDao {
 //    }
 
     @Override
-    public Optional<OrderItem> selectOrderById(Long orderId) {
+    public Optional<Order> selectOrderById(Long orderId) {
         return orderRepository.findById(orderId);
     }
 
     @Override
-    public List<OrderItem> selectOrdersByProductId(Long productId) {
+    public List<Order> selectOrdersByProductId(Long productId) {
         return orderRepository.findByProductsProductId(productId);
     }
 
     @Override
-    public void insertOrder(OrderItem orderItem) {
-        orderRepository.save(orderItem);
+    public List<Order> selectAllByCustomerOrderByCreatedDateDesc(Customer customer) {
+        return orderRepository.findAllByCustomerOrderByCreatedDateDesc(customer);
     }
 
     @Override
-    public void updateOrder(OrderItem orderItem) {
-        orderRepository.save(orderItem);
+    public void insertOrder(Order order) {
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void updateOrder(Order order) {
+        orderRepository.save(order);
     }
 
     @Override
@@ -73,12 +84,12 @@ public class OrderJPADataAccessService implements OrderDao {
     }
 
     @Override
-    public boolean isOrderExistsByStatus(String status) {
+    public boolean isOrderExistsByStatus(OrderStatus status) {
         return orderRepository.existsOrderByStatus(status);
     }
 
     @Override
-    public void updateOrderStatus(Long orderId, String status) {
+    public void updateOrderStatus(Long orderId, OrderStatus status) {
         orderRepository.updateOrderStatusById(status, orderId);
     }
 }

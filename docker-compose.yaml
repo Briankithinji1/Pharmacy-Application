@@ -11,11 +11,11 @@ services:
     volumes:
       - pharmacy-db-server-volume:/var/lib/postgresql/data
     environment:
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=password
-        - POSTGRES_DB:${DATABASE_NAME}
+      POSTGRES_USER: brycode
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ${DATABASE_NAME}
     ports:
-        - '5702:5432'
+        - '5332:5432'
 
   pharmacy-db-admin:
     image: dpage/pgadmin4
@@ -23,8 +23,8 @@ services:
     volumes:
       - pharmacy-db-admin-volume:/var/lib/pgadmin
     environment:
-        - PGADMIN_DEFAULT_EMAIL=${DATABASE_ADMIN_EMAIL}
-        - PGADMIN_DEFAULT_PASSWORD=${DATABASE_ADMIN_PASSWORD}
+      PGADMIN_DEFAULT_EMAIL: ${DATABASE_ADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${DATABASE_ADMIN_PASSWORD}
     ports:
         - '5703:80'
     depends_on:

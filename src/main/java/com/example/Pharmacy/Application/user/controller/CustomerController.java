@@ -1,13 +1,11 @@
 package com.example.Pharmacy.Application.user.controller;
 
-import com.example.Pharmacy.Application.cart.CartStatus;
+import com.example.Pharmacy.Application.cart.enums.CartStatus;
 import com.example.Pharmacy.Application.exception.ResourceNotFoundException;
-import com.example.Pharmacy.Application.order.OrderStatus;
-import com.example.Pharmacy.Application.user.dao.PharmacistDao;
+import com.example.Pharmacy.Application.order.enums.OrderStatus;
 import com.example.Pharmacy.Application.user.dto.CustomerDTO;
 import com.example.Pharmacy.Application.user.model.Customer;
 import com.example.Pharmacy.Application.user.model.Pharmacist;
-import com.example.Pharmacy.Application.user.model.Veterinarian;
 import com.example.Pharmacy.Application.user.repository.PharmacistRepository;
 import com.example.Pharmacy.Application.user.service.CustomerService;
 import lombok.RequiredArgsConstructor;
