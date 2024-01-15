@@ -64,7 +64,7 @@ public class ProductRepositoryTest {
         product.setProductName("Ventolin");
         product.setDescription("A bronchodilator used to treat asthma and other breathing problems.");
         product.setImageUri("ventolin.jpg");
-        product.setPrice("19.99");
+//        product.setPrice("19.99");
         product.setQuantity("50 tablets");
         product.setCategory(categoryRepository.findById(1L).orElse(null));
         product.setAvailable(true);

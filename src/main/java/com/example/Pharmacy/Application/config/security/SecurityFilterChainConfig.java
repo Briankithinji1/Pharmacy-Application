@@ -9,9 +9,11 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -20,15 +22,24 @@ public class SecurityFilterChainConfig {
     private final AuthenticationProvider authenticationProvider;
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final LogoutHandler logoutHandler;
 
     public SecurityFilterChainConfig(
             AuthenticationProvider authenticationProvider,
             JWTAuthenticationFilter jwtAuthenticationFilter,
-            AuthenticationEntryPoint authenticationEntryPoint) {
+            AuthenticationEntryPoint authenticationEntryPoint, LogoutHandler logoutHandler) {
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.authenticationEntryPoint = authenticationEntryPoint;
+        this.logoutHandler = logoutHandler;
     }
+
+    public static final String[] whiteListedRoutes = {
+            "pharmacy/api/v1/users",
+            "pharmacy/api/v1/auth/**",
+            "/api-docs/**",
+            "/swagger-ui.html"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -38,8 +49,7 @@ public class SecurityFilterChainConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(
                         HttpMethod.POST,
-                        "api/v1/users",
-                        "api/v1/auth/login"
+                        whiteListedRoutes
                 )
                 .permitAll()
                 .anyRequest()
@@ -53,8 +63,15 @@ public class SecurityFilterChainConfig {
                         jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class
                 )
+                .logout(
+                        logout -> logout
+                                .logoutUrl("pharmacy/api/v1/auth/logout")
+                                .addLogoutHandler(logoutHandler)
+                                .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext()))
+                )
                 .exceptionHandling()
-                .authenticationEntryPoint(authenticationEntryPoint);
+                .authenticationEntryPoint(authenticationEntryPoint)
+        ;
         return http.build();
     }
 }

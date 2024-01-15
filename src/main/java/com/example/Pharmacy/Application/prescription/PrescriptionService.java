@@ -102,8 +102,8 @@ public class PrescriptionService {
             changes = true;
         }
 
-        if (prescription.getMedicine() != null && !prescription.getMedicine().equals(prescriptions.getMedicine())) {
-            prescriptions.setMedicine(prescription.getMedicine());
+        if (prescription.getProduct() != null && !prescription.getProduct().equals(prescriptions.getProduct())) {
+            prescriptions.setProduct(prescription.getProduct());
             changes = true;
         }
 

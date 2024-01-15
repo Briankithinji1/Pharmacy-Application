@@ -2,7 +2,6 @@ package com.example.Pharmacy.Application.product;
 
 import com.example.Pharmacy.Application.cart.model.Cart;
 import com.example.Pharmacy.Application.category.Category;
-import com.example.Pharmacy.Application.order.model.Order;
 import com.example.Pharmacy.Application.prescription.Prescription;
 import com.example.Pharmacy.Application.user.model.Pharmacist;
 import jakarta.persistence.*;
@@ -11,9 +10,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -39,8 +37,8 @@ public class Product {
 
     //relationship with category, pharmacy, order, cart, user, supplier
 
-    @ManyToMany(mappedBy = "products")
-    private Set<Order> orders = new HashSet<>();
+//    @ManyToMany(mappedBy = "products")
+//    private Set<Order> orders = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
     private List<Cart> carts;
@@ -49,7 +47,6 @@ public class Product {
     @JoinColumn(name = "pharmacistId", referencedColumnName = "userId")
     private Pharmacist pharmacist;
 
-    @ManyToOne
-    @JoinColumn(name = "prescription_is")
-    private List<Prescription> prescriptions;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Prescription> prescriptions = new ArrayList<>();
 }

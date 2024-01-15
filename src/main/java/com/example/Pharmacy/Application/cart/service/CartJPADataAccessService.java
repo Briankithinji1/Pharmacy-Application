@@ -39,7 +39,7 @@ public class CartJPADataAccessService implements CartDao {
 
     @Override
     public void deleteByUser(Customer customer) {
-        cartRepository.deleteByUser(customer);
+        cartRepository.deleteByCustomer(customer);
     }
 
 //    @Override
@@ -79,7 +79,7 @@ public class CartJPADataAccessService implements CartDao {
 
     @Override
     public void deleteCartItemsByUser(Customer customer) {
-        cartRepository.deleteByUser(customer);
+        cartRepository.deleteByCustomer(customer);
     }
 
     @Override

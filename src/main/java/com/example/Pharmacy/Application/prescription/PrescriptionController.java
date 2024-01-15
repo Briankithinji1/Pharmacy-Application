@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/prescription")
+@RequestMapping("/prescription")
 public class PrescriptionController {
 
     private final PrescriptionService prescriptionService;

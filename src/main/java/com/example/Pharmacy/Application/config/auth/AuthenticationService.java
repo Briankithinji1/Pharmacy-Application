@@ -1,6 +1,8 @@
 package com.example.Pharmacy.Application.config.auth;
 
+import com.example.Pharmacy.Application.config.email.EmailService;
 import com.example.Pharmacy.Application.config.jwt.JWTService;
+import com.example.Pharmacy.Application.config.password.ResetPasswordRequest;
 import com.example.Pharmacy.Application.config.security.SecurityService;
 import com.example.Pharmacy.Application.config.token.TokenService;
 import com.example.Pharmacy.Application.exception.ResourceNotFoundException;
@@ -10,6 +12,7 @@ import com.example.Pharmacy.Application.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,6 +23,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -31,17 +37,24 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
     private final SecurityService securityService;
+    private final EmailService emailService;
+    private final MessageSource messageSource;
 
-    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, JWTService jwtService, AuthenticationManager authenticationManager, TokenService tokenService, SecurityService securityService) {
+    private String frontendUrl;
+    private String[] recipients;
+
+    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, JWTService jwtService, AuthenticationManager authenticationManager, TokenService tokenService, SecurityService securityService, EmailService emailService, MessageSource messageSource) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
         this.securityService = securityService;
+        this.emailService = emailService;
+        this.messageSource = messageSource;
     }
 
-    public AuthenticationResponse register(RegisterRequest registerRequest) {
+    public void register(RegisterRequest registerRequest) {
         var principal = User.builder()
                 .firstname(registerRequest.firstname())
                 .lastname(registerRequest.lastname())
@@ -54,7 +67,7 @@ public class AuthenticationService {
         String accessToken = jwtService.issueToken(principal.getEmail());
         String refreshToken = jwtService.issueRefreshToken(principal.getEmail());
         tokenService.saveUserToken(principal, accessToken);
-        return new AuthenticationResponse(accessToken, refreshToken);
+        new AuthenticationResponse(accessToken, refreshToken);
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest authRequest) {
@@ -115,5 +128,25 @@ public class AuthenticationService {
         } else {
             servletResponse.sendError(HttpServletResponse.SC_NOT_FOUND, "Email not found");
         }
+    }
+
+    public String resetPassword(String email, ResetPasswordRequest passwordRequest) {
+        email = email.toLowerCase();
+        User user = userRepository.findUserByEmail(email).get();
+        String password = passwordRequest.password();
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
+
+        String finalEmail = email;
+        Map<String, Object> variables = new HashMap<String, Object>() {{
+            put("loginLink", frontendUrl + "/auth/login?email=" + finalEmail);
+            put("password", password);
+        }};
+        emailService.sendMessageUsingThymeleafTemplate(new String[]{email}, messageSource.getMessage("password_reset", null, getLocale(user)), variables, "reset-password.html", getLocale(user));
+        return "Password reset successfully";
+    }
+
+    private Locale getLocale(User user) {
+        return Locale.getDefault();
     }
 }

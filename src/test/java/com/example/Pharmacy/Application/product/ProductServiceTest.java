@@ -11,7 +11,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 
@@ -51,7 +50,7 @@ class ProductServiceTest {
         product.setProductName("Ventolin");
         product.setDescription("A bronchodilator used to treat asthma and other breathing problems.");
         product.setImageUri("ventolin.jpg");
-        product.setPrice("19.99");
+//        product.setPrice("19.99");
         product.setQuantity("50 tablets");
         product.setCategory(category);
         product.setAvailable(true);
@@ -62,7 +61,7 @@ class ProductServiceTest {
         updatedProduct.setProductName("TriHistamine");
         updatedProduct.setDescription("A bronchodilator used to treat asthma and other breathing problems.");
         updatedProduct.setImageUri("ventolin.jpg");
-        updatedProduct.setPrice("19.99");
+//        updatedProduct.setPrice("19.99");
         updatedProduct.setQuantity("50 tablets");
         updatedProduct.setCategory(category);
         updatedProduct.setAvailable(true);

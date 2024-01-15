@@ -1,5 +1,7 @@
 server:
   port: 8080
+  servlet:
+    context-path: /pharmacy/api/v1
   error:
     include-message: always
 
@@ -32,3 +34,7 @@ jwt:
   secret-key: 0ddf5597e02d981f8803c4cc11f015a4e52679d706edb29b595d9e466def5bcf95273a3053ab5d97ee893c23e4023b912daefaade316406a33b7685d4d223dfa
   expiration: 86400000
   refresh-token-expiration: 604800000
+
+springdoc:
+  api-doc:
+    path: /api-docs

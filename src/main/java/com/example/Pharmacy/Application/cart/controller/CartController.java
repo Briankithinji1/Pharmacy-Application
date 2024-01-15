@@ -1,7 +1,6 @@
 package com.example.Pharmacy.Application.cart.controller;
 
 import com.example.Pharmacy.Application.cart.dto.AddToCartDto;
-import com.example.Pharmacy.Application.cart.dto.CartItemDTO;
 import com.example.Pharmacy.Application.cart.model.Cart;
 import com.example.Pharmacy.Application.cart.dto.CartDTO;
 import com.example.Pharmacy.Application.cart.service.CartService;
@@ -19,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/cart")
+@RequestMapping("/cart")
 public class CartController {
 
     private final CartService cartService;

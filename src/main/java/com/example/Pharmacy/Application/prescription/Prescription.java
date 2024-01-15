@@ -8,9 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,6 +37,8 @@ public class Prescription {
 //                    @Index(name = "idx_prescription_product_product_id", columnList = "productId")
 //            }
 //    )
-    @OneToMany(mappedBy = "prescription")
-    private List<Product> medicine;
+
+    @ManyToOne
+    @JoinColumn(name = "productId")
+    private Product product;
 }

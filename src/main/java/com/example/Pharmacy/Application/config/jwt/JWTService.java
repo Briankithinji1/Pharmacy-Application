@@ -4,7 +4,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.time.Instant;
@@ -13,14 +15,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-@Service
+//@Service
+@Component
 public class JWTService {
-
+//    @Value("${jwt.secret-key:secret-key}")
     private final String secretKey;
     private static final long refreshTokenValidity = 5 * 60 * 60;
     private static final long accessTokenValidity = 15;
+    private static final long resetPasswordTokenValidity = 60 * 60;
 
-    public JWTService(String secretKey) {
+    @Autowired
+    public JWTService(
+            @Value("${jwt.secret-key:secret-key}")
+            String secretKey
+    ) {
         this.secretKey = secretKey;
     }
 
@@ -44,6 +52,7 @@ public class JWTService {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
+                .setIssuer("self")
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(
                         Date.from(Instant.now().plus(expirationTime, ChronoUnit.MINUTES))
@@ -53,9 +62,25 @@ public class JWTService {
     }
 
     public String issueRefreshToken(
-            String subject
+            String username
     ) {
-        return issueToken(subject, Map.of(), refreshTokenValidity);
+        return generateToken(username, refreshTokenValidity);
+    }
+
+    // Used by refresh token, reset password
+    public String generateToken(String username, long expirationTime) {
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(Date.from(Instant.now()))
+                .setExpiration(
+                        Date.from(Instant.now().plus(expirationTime, ChronoUnit.MINUTES))
+                )
+                .signWith(getSigningKey(), SignatureAlgorithm.HS512)
+                .compact();
+    }
+
+    public String issueTokenForPasswordReset(String username) {
+        return generateToken(username, resetPasswordTokenValidity);
     }
 
     public String getSubject(String token) {
