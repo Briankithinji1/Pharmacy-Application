@@ -12,17 +12,17 @@ import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    List<Order> findByProductsProductId(Long productId);
+//    List<Order> findByProductsProductId(Long productId);
     //List<Order> findByUserId(Long userId);
 
-    List<Order> findAllByCustomerOrderByCreatedDateDesc(Customer customer);
+    List<Order> findAllByCustomerOrderByOrderDateDesc(Customer customer);
 
     Optional<Order> findByStatus(String status);
 
     boolean existsOrderByOrderId(Long orderId);
     //boolean existsOrderByUserId(Long userId); // TODO: check if it should be a list instead of boolean
     boolean existsOrderByStatus(OrderStatus status);
-    boolean existsOrderByProductsProductId(Long productId);
+//    boolean existsOrderByProductsProductId(Long productId);
 
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Order o SET o.status = ?1 WHERE o.orderId = ?2")

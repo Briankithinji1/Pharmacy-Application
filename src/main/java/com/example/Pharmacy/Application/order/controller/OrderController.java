@@ -37,11 +37,11 @@ public class OrderController {
 //        return orderService.getOrdersByUserId(userId);
 //    }
 
-    @GetMapping("byProductID{productId}")
-    public List<OrderDTO> getOrderByProductId(
-            @PathVariable("productId") Long productId) {
-        return orderService.getOrdersByProductId(productId);
-    }
+//    @GetMapping("byProductID{productId}")
+//    public List<OrderDTO> getOrderByProductId(
+//            @PathVariable("productId") Long productId) {
+//        return orderService.getOrdersByProductId(productId);
+//    }
 
     @GetMapping("byOrderStatus{status}")
     public Optional<OrderDTO> getOrderByStatus(

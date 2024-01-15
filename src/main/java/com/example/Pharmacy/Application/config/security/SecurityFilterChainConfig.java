@@ -1,6 +1,7 @@
 package com.example.Pharmacy.Application.config.security;
 
 import com.example.Pharmacy.Application.config.jwt.JWTAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,7 +28,8 @@ public class SecurityFilterChainConfig {
     public SecurityFilterChainConfig(
             AuthenticationProvider authenticationProvider,
             JWTAuthenticationFilter jwtAuthenticationFilter,
-            AuthenticationEntryPoint authenticationEntryPoint, LogoutHandler logoutHandler) {
+            @Qualifier("delegatedAuthenticationEntryPoint") AuthenticationEntryPoint authenticationEntryPoint,
+            LogoutHandler logoutHandler) {
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.authenticationEntryPoint = authenticationEntryPoint;
@@ -35,10 +37,13 @@ public class SecurityFilterChainConfig {
     }
 
     public static final String[] whiteListedRoutes = {
-            "pharmacy/api/v1/users",
-            "pharmacy/api/v1/auth/**",
+            "/pharmacy/api/v1/users",
+            "/pharmacy/api/v1/auth/**",
+            "/pharmacy/api/v1/auth/register",
+            "/pharmacy/api/v1/auth/login",
             "/api-docs/**",
-            "/swagger-ui.html"
+            "/swagger-ui.html",
+            "/swagger-ui/**"
     };
 
     @Bean
@@ -48,7 +53,6 @@ public class SecurityFilterChainConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests()
                 .requestMatchers(
-                        HttpMethod.POST,
                         whiteListedRoutes
                 )
                 .permitAll()
@@ -65,12 +69,16 @@ public class SecurityFilterChainConfig {
                 )
                 .logout(
                         logout -> logout
-                                .logoutUrl("pharmacy/api/v1/auth/logout")
+                                .logoutUrl("/pharmacy/api/v1/auth/logout")
                                 .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext()))
                 )
                 .exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint)
+                .and()
+                .oauth2Login(oath2 ->
+                        oath2.loginPage("/pharmacy/api/v1/auth/login").permitAll()
+                )
         ;
         return http.build();
     }

@@ -45,18 +45,18 @@ public class PrescriptionService {
                 .toList();
     }
 
-    public List<PrescriptionDTO> getPrescriptionByProductId(Long productId) {
-        if (!prescriptionDao.isPrescriptionExistByProductId(productId)) {
-            throw new ResourceNotFoundException(
-                    "Prescription not found for productId: [%s]".formatted(productId)
-            );
-        }
-
-        return prescriptionDao.selectAllPrescriptionsByProductId(productId)
-                .stream()
-                .map(dtoMapper)
-                .toList();
-    }
+//    public List<PrescriptionDTO> getPrescriptionByProductId(Long productId) {
+//        if (!prescriptionDao.isPrescriptionExistByProductId(productId)) {
+//            throw new ResourceNotFoundException(
+//                    "Prescription not found for productId: [%s]".formatted(productId)
+//            );
+//        }
+//
+//        return prescriptionDao.selectAllPrescriptionsByProductId(productId)
+//                .stream()
+//                .map(dtoMapper)
+//                .toList();
+//    }
 
     public void addPrescription (Prescription prescription) {
         if (prescriptionDao.isPrescriptionExistById(prescription.getPrescriptionId())) {

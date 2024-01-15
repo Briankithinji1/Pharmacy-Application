@@ -13,14 +13,14 @@ public interface OrderDao {
     Optional<Order> selectAllOrdersByStatus(String status);
     //List<Order> selectAllOrdersByUserId(Long userId); // TODO: implement users and orders
     Optional<Order> selectOrderById(Long orderId);
-    List<Order> selectOrdersByProductId(Long productId);
+//    List<Order> selectOrdersByProductId(Long productId);
     List<Order> selectAllByCustomerOrderByCreatedDateDesc(Customer customer);
     void insertOrder(Order order);
     void updateOrder(Order order);
     void deleteOrder(Long orderId);
     boolean isOrderExistsById(Long orderId);
     //boolean isOrderExistsByUserId(Long userId); // TODO: implement users feature
-    boolean isOrderExistsByProductId(Long productId);
+//    boolean isOrderExistsByProductId(Long productId);
     boolean isOrderExistsByStatus(OrderStatus status);
     void updateOrderStatus(Long orderId, OrderStatus status);
 }

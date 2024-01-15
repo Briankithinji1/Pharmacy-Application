@@ -7,12 +7,12 @@ public interface PrescriptionDao {
     List<Prescription> selectAllPrescriptions();
     Optional<Prescription> selectPrescriptionById(Long prescriptionId);
     List<Prescription> selectAllPrescriptionsByUserId(Long userId);
-    List<Prescription> selectAllPrescriptionsByProductId(Long productId);
+//    List<Prescription> selectAllPrescriptionsByProductId(Long productId);
     void insertPrescription(Prescription prescription);
     void updatePrescription(Prescription prescription);
     void deletePrescription(Long prescriptionId);
     boolean isPrescriptionExistById(Long prescriptionId);
     boolean isPrescriptionExistByUserId(Long userId);
-    boolean isPrescriptionExistByProductId(Long productId);
+//    boolean isPrescriptionExistByProductId(Long productId);
     void updatePrescriptionPrescriptionFileId(String prescriptionFileId, Long prescriptionId);
 }

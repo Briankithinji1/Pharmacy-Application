@@ -1,6 +1,5 @@
 package com.example.Pharmacy.Application.order.service;
 
-import com.example.Pharmacy.Application.cart.model.Cart;
 import com.example.Pharmacy.Application.order.dao.OrderDao;
 import com.example.Pharmacy.Application.order.enums.OrderStatus;
 import com.example.Pharmacy.Application.order.model.Order;
@@ -43,14 +42,14 @@ public class OrderJPADataAccessService implements OrderDao {
         return orderRepository.findById(orderId);
     }
 
-    @Override
-    public List<Order> selectOrdersByProductId(Long productId) {
-        return orderRepository.findByProductsProductId(productId);
-    }
+//    @Override
+//    public List<Order> selectOrdersByProductId(Long productId) {
+//        return orderRepository.findByProductsProductId(productId);
+//    }
 
     @Override
     public List<Order> selectAllByCustomerOrderByCreatedDateDesc(Customer customer) {
-        return orderRepository.findAllByCustomerOrderByCreatedDateDesc(customer);
+        return orderRepository.findAllByCustomerOrderByOrderDateDesc(customer);
     }
 
     @Override
@@ -78,10 +77,10 @@ public class OrderJPADataAccessService implements OrderDao {
 //        return orderRepository.existsOrderByUserId(userId);
 //    }
 
-    @Override
-    public boolean isOrderExistsByProductId(Long productId) {
-        return orderRepository.existsOrderByProductsProductId(productId);
-    }
+//    @Override
+//    public boolean isOrderExistsByProductId(Long productId) {
+//        return orderRepository.existsOrderByProductsProductId(productId);
+//    }
 
     @Override
     public boolean isOrderExistsByStatus(OrderStatus status) {

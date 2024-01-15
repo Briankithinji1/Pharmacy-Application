@@ -11,9 +11,9 @@ public interface PrescriptionRepository extends JpaRepository<Prescription, Long
 
     boolean existsByPrescriptionId(Long prescriptionId);
     boolean existsByCustomerUserId(Long userId);
-    boolean existsByMedicineProductId(Long productId);
+//    boolean existsByMedicineProductId(Long productId);
     List<Prescription> findAllByCustomerUserId(Long userId);
-    List<Prescription> findByMedicineProductId(Long productId);
+//    List<Prescription> findByMedicineProductId(Long productId);
 
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Prescription p SET p.prescriptionFileId = ?1 WHERE p.prescriptionId = ?2")

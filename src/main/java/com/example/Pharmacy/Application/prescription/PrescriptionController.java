@@ -32,12 +32,12 @@ public class PrescriptionController {
         return prescriptionService.getPrescriptionByUserId(userId);
     }
 
-    @GetMapping("/byProductId/{productId}")
-    public List<PrescriptionDTO> getPrescriptionByProductId(
-            @PathVariable("prescriptionId") Long productId
-    ) {
-        return prescriptionService.getPrescriptionByProductId(productId);
-    }
+//    @GetMapping("/byProductId/{productId}")
+//    public List<PrescriptionDTO> getPrescriptionByProductId(
+//            @PathVariable("prescriptionId") Long productId
+//    ) {
+//        return prescriptionService.getPrescriptionByProductId(productId);
+//    }
 
     @PostMapping("addPrescription")
     public ResponseEntity<?> addPrescription(

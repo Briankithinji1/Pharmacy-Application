@@ -57,12 +57,12 @@ public class OrderService {
 //                .toList();
 //    }
 
-    public List<OrderDTO> getOrdersByProductId(Long productId) {
-        return orderDao.selectOrdersByProductId(productId)
-                .stream()
-                .map(orderDTOMapper)
-                .toList();
-    }
+//    public List<OrderDTO> getOrdersByProductId(Long productId) {
+//        return orderDao.selectOrdersByProductId(productId)
+//                .stream()
+//                .map(orderDTOMapper)
+//                .toList();
+//    }
 
     public Optional<OrderDTO> getOrderByStatus(String status) {
         return orderDao.selectAllOrdersByStatus(status)

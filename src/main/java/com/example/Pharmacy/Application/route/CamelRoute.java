@@ -9,9 +9,9 @@ public class CamelRoute extends RouteBuilder {
     public void configure() throws Exception {
         from("direct:emailProducer")
                 .log("${body}")
-                .to("kafka:emailTopic");
+                .to("kafka:emailTopic?brokers=localhost:9092");
 
-        from("kafka:emailTopic")
+        from("kafka:emailTopic?brokers=localhost:9092")
                 .to("bean:emailService?method=sendHtmlMessage");
     }
 }

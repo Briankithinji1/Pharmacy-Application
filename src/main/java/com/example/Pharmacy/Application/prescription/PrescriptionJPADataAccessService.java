@@ -33,10 +33,10 @@ public class PrescriptionJPADataAccessService implements PrescriptionDao {
         return repository.findAllByCustomerUserId(userId);
     }
 
-    @Override
-    public List<Prescription> selectAllPrescriptionsByProductId(Long productId) {
-        return repository.findByMedicineProductId(productId);
-    }
+//    @Override
+//    public List<Prescription> selectAllPrescriptionsByProductId(Long productId) {
+//        return repository.findByMedicineProductId(productId);
+//    }
 
     @Override
     public void insertPrescription(Prescription prescription) {
@@ -63,10 +63,10 @@ public class PrescriptionJPADataAccessService implements PrescriptionDao {
         return repository.existsByCustomerUserId(userId);
     }
 
-    @Override
-    public boolean isPrescriptionExistByProductId(Long productId) {
-        return repository.existsByMedicineProductId(productId);
-    }
+//    @Override
+//    public boolean isPrescriptionExistByProductId(Long productId) {
+//        return repository.existsByMedicineProductId(productId);
+//    }
 
     @Override
     public void updatePrescriptionPrescriptionFileId(String prescriptionFileId, Long prescriptionId) {
