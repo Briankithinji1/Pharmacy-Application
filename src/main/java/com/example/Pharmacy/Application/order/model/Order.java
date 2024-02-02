@@ -1,12 +1,14 @@
 package com.example.Pharmacy.Application.order.model;
 
 import com.example.Pharmacy.Application.order.enums.OrderStatus;
+import com.example.Pharmacy.Application.payment.model.Payment;
 import com.example.Pharmacy.Application.user.model.Customer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,12 +22,9 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
-//    private String orderName;
-//    private String description;
     private OrderStatus status;
-//    private Double productPrice;
     private Integer quantity;
-    private Double totalPrice;
+    private BigDecimal totalPrice;
     private LocalDateTime orderDate;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
@@ -35,4 +34,7 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @OneToOne(mappedBy = "order")
+    private Payment payment;
 }

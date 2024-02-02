@@ -84,3 +84,13 @@ email:
     auth:
       username: eastendchemists@gmail.com
       password: ""
+
+app:
+  integrations:
+    mpesa:
+      consumer-key: YOUR_ACCESS_KEY
+      consumer-secret: YOUR_ACCESS_TOKEN
+      domain: https://sandbox.safaricom.co.ke
+      shortCode: MPESA_SHORT_CODE
+      express:
+        shortCode: MPESA_SHORT_CODE

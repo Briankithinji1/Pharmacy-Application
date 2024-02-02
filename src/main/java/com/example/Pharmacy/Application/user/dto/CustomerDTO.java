@@ -5,7 +5,7 @@ public record CustomerDTO(
         String firstname,
         String lastname,
         String email,
-        String password,
+//        String password,
         String phoneNumber,
         String address,
         String medicalHistory

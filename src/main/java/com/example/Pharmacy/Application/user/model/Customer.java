@@ -2,6 +2,7 @@ package com.example.Pharmacy.Application.user.model;
 
 import com.example.Pharmacy.Application.cart.model.Cart;
 import com.example.Pharmacy.Application.order.model.Order;
+import com.example.Pharmacy.Application.payment.model.Payment;
 import com.example.Pharmacy.Application.prescription.Prescription;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,9 @@ public class Customer extends User {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Cart> cartList;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Payment> payment;
 
     @ManyToMany
     @JoinTable(
