@@ -23,19 +23,19 @@ public class CustomerController {
     private final CustomerService customerService;
     private final PharmacistRepository repository;
 
-    @GetMapping("allCustomers")
+    @GetMapping("all")
     public List<CustomerDTO> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
-    @GetMapping("byUserId/{userId}")
+    @GetMapping("{userId}")
     public CustomerDTO getCustomerByUserId(
             @PathVariable("userId") Long userId
     ) {
         return customerService.getCustomerById(userId);
     }
 
-    @GetMapping("byEmail/{email}")
+    @GetMapping("{email}")
     public Optional<CustomerDTO> getCustomerByEmail(
             @PathVariable("email") String email
     ) {

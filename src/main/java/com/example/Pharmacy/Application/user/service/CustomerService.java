@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.user.service;
+package main.java.com.example.Pharmacy.Application.user.service;
 
 import com.example.Pharmacy.Application.cart.enums.CartStatus;
 import com.example.Pharmacy.Application.exception.DuplicateResourceException;

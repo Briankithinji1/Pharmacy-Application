@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.user.mapper;
+package main.java.com.example.Pharmacy.Application.user.mapper;
 
 import com.example.Pharmacy.Application.user.dto.CustomerDTO;
 import com.example.Pharmacy.Application.user.model.Customer;

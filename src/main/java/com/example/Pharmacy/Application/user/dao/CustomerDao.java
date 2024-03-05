@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.user.dao;
+package main.java.com.example.Pharmacy.Application.user.dao;
 
 import com.example.Pharmacy.Application.cart.enums.CartStatus;
 import com.example.Pharmacy.Application.order.enums.OrderStatus;

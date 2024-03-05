@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.cart.model;
+package main.java.com.example.Pharmacy.Application.cart.model;
 
 import com.example.Pharmacy.Application.cart.enums.CartStatus;
 import com.example.Pharmacy.Application.product.Product;

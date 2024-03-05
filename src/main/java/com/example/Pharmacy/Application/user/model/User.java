@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.user.model;
+package main.java.com.example.Pharmacy.Application.user.model;
 
 import com.example.Pharmacy.Application.config.token.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;

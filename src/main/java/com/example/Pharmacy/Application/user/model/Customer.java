@@ -46,7 +46,7 @@ public class Customer extends User {
                     @Index(name = "idx_customer_pharmacist_pharmacist_id", columnList = "pharmacistId")
             }
     )
-    private List<Pharmacist> assignedPharmacist = new ArrayList<>();
+    private List<com.example.Pharmacy.Application.user.model.Pharmacist> assignedPharmacist = new ArrayList<>();
 
     // ToDo: One To Many relationship with payments, delivery, feedback
 
