@@ -15,7 +15,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: ${DATABASE_NAME}
     ports:
-        - '5332:5432'
+        - '5702:5432'
 
   pharmacy-db-admin:
     image: dpage/pgadmin4

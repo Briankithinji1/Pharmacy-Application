@@ -1,19 +1,27 @@
 package main.java.com.example.Pharmacy.Application.config.security;
 
 import main.java.com.example.Pharmacy.Application.config.jwt.JWTAuthenticationFilter;
-import org.springframework.beans.factory.annotation.Qualifier;
+import main.java.com.example.Pharmacy.Application.user.model.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -21,17 +29,14 @@ public class SecurityFilterChainConfig {
 
     private final AuthenticationProvider authenticationProvider;
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
-    private final AuthenticationEntryPoint authenticationEntryPoint;
     private final LogoutHandler logoutHandler;
 
     public SecurityFilterChainConfig(
             AuthenticationProvider authenticationProvider,
             JWTAuthenticationFilter jwtAuthenticationFilter,
-            @Qualifier("delegatedAuthenticationEntryPoint") AuthenticationEntryPoint authenticationEntryPoint,
             LogoutHandler logoutHandler) {
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-        this.authenticationEntryPoint = authenticationEntryPoint;
         this.logoutHandler = logoutHandler;
     }
 
@@ -47,38 +52,48 @@ public class SecurityFilterChainConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
-                .authorizeHttpRequests()
-                .requestMatchers(
-                        whiteListedRoutes
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers(getRequestMatchers()).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority(String.valueOf(Role.ADMIN))
+                        .requestMatchers(new AntPathRequestMatcher("/user/**")).hasAuthority(String.valueOf(Role.USER))
+                        .anyRequest().authenticated()
                 )
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+                .sessionManagement(manager -> manager
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(
                         jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class
                 )
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler(
+                                ((request, response, accessDeniedException) -> response.setStatus(403))
+                        )
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                )
                 .logout(
                         logout -> logout
                                 .logoutUrl("/pharmacy/api/v1/auth/logout")
                                 .addLogoutHandler(logoutHandler)
-                                .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext()))
+                                .logoutSuccessHandler(
+                                        ((request, response, authentication) -> SecurityContextHolder.clearContext())
+                                )
                 )
-                .exceptionHandling()
-                .authenticationEntryPoint(authenticationEntryPoint)
-                .and()
                 .oauth2Login(oath2 ->
                         oath2.loginPage("/pharmacy/api/v1/auth/login").permitAll()
                 )
-        ;
-        return http.build();
+                .build();
+    }
+
+    private RequestMatcher getRequestMatchers() {
+        List<RequestMatcher> matchers = new ArrayList<>();
+        for (String route: whiteListedRoutes) {
+            matchers.add(new AntPathRequestMatcher(route));
+        }
+        return new OrRequestMatcher(matchers);
     }
 }

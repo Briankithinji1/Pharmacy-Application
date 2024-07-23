@@ -20,7 +20,7 @@ spring:
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -81,6 +81,7 @@ email:
           auth: true
           starttls:
             enable: true
+            required: true
     auth:
       username: eastendchemists@gmail.com
       password: ""
