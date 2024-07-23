@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.exception;
+package main.java.com.example.Pharmacy.Application.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

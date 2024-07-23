@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.user.dto;
+package main.java.com.example.Pharmacy.Application.user.dto;
 
 public record FinanceManagerDTO(
         Long userId,

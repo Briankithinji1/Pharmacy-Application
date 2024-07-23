@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.prescription;
+package main.java.com.example.Pharmacy.Application.prescription;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

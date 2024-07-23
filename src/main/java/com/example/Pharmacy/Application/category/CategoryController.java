@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.category;
+package main.java.com.example.Pharmacy.Application.category;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

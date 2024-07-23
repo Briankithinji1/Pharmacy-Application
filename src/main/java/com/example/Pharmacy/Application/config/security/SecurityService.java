@@ -1,6 +1,6 @@
-package com.example.Pharmacy.Application.config.security;
+package main.java.com.example.Pharmacy.Application.config.security;
 
-import com.example.Pharmacy.Application.user.dao.UserDao;
+import main.java.com.example.Pharmacy.Application.user.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

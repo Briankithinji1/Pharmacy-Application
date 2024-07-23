@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.product;
+package main.java.com.example.Pharmacy.Application.product;
 
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

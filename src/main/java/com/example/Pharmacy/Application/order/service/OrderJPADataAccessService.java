@@ -1,10 +1,10 @@
-package com.example.Pharmacy.Application.order.service;
+package main.java.com.example.Pharmacy.Application.order.service;
 
-import com.example.Pharmacy.Application.order.dao.OrderDao;
-import com.example.Pharmacy.Application.order.enums.OrderStatus;
-import com.example.Pharmacy.Application.order.model.Order;
-import com.example.Pharmacy.Application.order.repository.OrderRepository;
-import com.example.Pharmacy.Application.user.model.Customer;
+import main.java.com.example.Pharmacy.Application.order.dao.OrderDao;
+import main.java.com.example.Pharmacy.Application.order.enums.OrderStatus;
+import main.java.com.example.Pharmacy.Application.order.model.Order;
+import main.java.com.example.Pharmacy.Application.order.repository.OrderRepository;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;

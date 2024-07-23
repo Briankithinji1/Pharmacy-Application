@@ -1,7 +1,9 @@
 package main.java.com.example.Pharmacy.Application.user.mapper;
 
-import com.example.Pharmacy.Application.user.dto.CustomerDTO;
-import com.example.Pharmacy.Application.user.model.Customer;
+//import com.example.Pharmacy.Application.user.dto.CustomerDTO;
+//import com.example.Pharmacy.Application.user.model.Customer;
+import main.java.com.example.Pharmacy.Application.user.dto.CustomerDTO;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;

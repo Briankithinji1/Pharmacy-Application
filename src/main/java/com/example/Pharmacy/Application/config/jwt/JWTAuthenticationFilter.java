@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.config.jwt;
+package main.java.com.example.Pharmacy.Application.config.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,12 +1,12 @@
-package com.example.Pharmacy.Application.prescription;
+package main.java.com.example.Pharmacy.Application.prescription;
 
-import com.example.Pharmacy.Application.product.Product;
-import com.example.Pharmacy.Application.user.model.Customer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import main.java.com.example.Pharmacy.Application.product.Product;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
 
 @Data
 @AllArgsConstructor

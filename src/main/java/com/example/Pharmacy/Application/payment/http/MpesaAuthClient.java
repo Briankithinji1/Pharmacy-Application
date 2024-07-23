@@ -1,6 +1,6 @@
-package com.example.Pharmacy.Application.payment.http;
+package main.java.com.example.Pharmacy.Application.payment.http;
 
-import com.example.Pharmacy.Application.payment.dto.AccessToken;
+import main.java.com.example.Pharmacy.Application.payment.dto.AccessToken;
 import org.springframework.web.service.annotation.GetExchange;
 
 public interface MpesaAuthClient {

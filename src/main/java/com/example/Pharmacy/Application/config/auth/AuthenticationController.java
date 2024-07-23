@@ -1,14 +1,14 @@
-package com.example.Pharmacy.Application.config.auth;
+package main.java.com.example.Pharmacy.Application.config.auth;
 
-import com.example.Pharmacy.Application.config.email.EmailService;
-import com.example.Pharmacy.Application.config.password.ResetPasswordRequest;
-import com.example.Pharmacy.Application.exception.DuplicateResourceException;
-import com.example.Pharmacy.Application.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import main.java.com.example.Pharmacy.Application.config.email.EmailService;
+import main.java.com.example.Pharmacy.Application.config.password.ResetPasswordRequest;
+import main.java.com.example.Pharmacy.Application.exception.DuplicateResourceException;
+import main.java.com.example.Pharmacy.Application.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

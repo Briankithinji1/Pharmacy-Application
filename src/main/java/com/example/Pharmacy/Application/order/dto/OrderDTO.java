@@ -1,6 +1,6 @@
-package com.example.Pharmacy.Application.order.dto;
+package main.java.com.example.Pharmacy.Application.order.dto;
 
-import com.example.Pharmacy.Application.order.enums.OrderStatus;
+import main.java.com.example.Pharmacy.Application.order.enums.OrderStatus;
 
 public record OrderDTO(
         Long orderId,

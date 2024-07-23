@@ -1,8 +1,8 @@
-package com.example.Pharmacy.Application.config.auth;
+package main.java.com.example.Pharmacy.Application.config.auth;
 
-import com.example.Pharmacy.Application.config.token.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import main.java.com.example.Pharmacy.Application.config.token.TokenRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;

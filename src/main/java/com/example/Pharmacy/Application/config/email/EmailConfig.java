@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.config.email;
+package main.java.com.example.Pharmacy.Application.config.email;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

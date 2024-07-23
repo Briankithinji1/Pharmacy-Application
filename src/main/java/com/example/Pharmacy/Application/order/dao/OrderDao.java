@@ -1,9 +1,8 @@
-package com.example.Pharmacy.Application.order.dao;
+package main.java.com.example.Pharmacy.Application.order.dao;
 
-import com.example.Pharmacy.Application.cart.model.Cart;
-import com.example.Pharmacy.Application.order.enums.OrderStatus;
-import com.example.Pharmacy.Application.order.model.Order;
-import com.example.Pharmacy.Application.user.model.Customer;
+import main.java.com.example.Pharmacy.Application.order.enums.OrderStatus;
+import main.java.com.example.Pharmacy.Application.order.model.Order;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
 
 import java.util.List;
 import java.util.Optional;

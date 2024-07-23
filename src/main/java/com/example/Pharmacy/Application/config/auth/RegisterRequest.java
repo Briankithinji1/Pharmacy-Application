@@ -1,6 +1,6 @@
-package com.example.Pharmacy.Application.config.auth;
+package main.java.com.example.Pharmacy.Application.config.auth;
 
-import com.example.Pharmacy.Application.user.model.User;
+import main.java.com.example.Pharmacy.Application.user.model.User;
 
 public record RegisterRequest(
         String firstname,

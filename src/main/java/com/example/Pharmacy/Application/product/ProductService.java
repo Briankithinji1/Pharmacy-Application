@@ -1,10 +1,10 @@
-package com.example.Pharmacy.Application.product;
+package main.java.com.example.Pharmacy.Application.product;
 
-import com.example.Pharmacy.Application.category.Category;
-import com.example.Pharmacy.Application.category.CategoryDao;
-import com.example.Pharmacy.Application.exception.DuplicateResourceException;
-import com.example.Pharmacy.Application.exception.RequestValidationException;
-import com.example.Pharmacy.Application.exception.ResourceNotFoundException;
+import main.java.com.example.Pharmacy.Application.category.Category;
+import main.java.com.example.Pharmacy.Application.category.CategoryDao;
+import main.java.com.example.Pharmacy.Application.exception.DuplicateResourceException;
+import main.java.com.example.Pharmacy.Application.exception.RequestValidationException;
+import main.java.com.example.Pharmacy.Application.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

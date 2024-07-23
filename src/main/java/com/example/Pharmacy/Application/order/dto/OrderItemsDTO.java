@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.order.dto;
+package main.java.com.example.Pharmacy.Application.order.dto;
 
 import jakarta.validation.constraints.NotNull;
 

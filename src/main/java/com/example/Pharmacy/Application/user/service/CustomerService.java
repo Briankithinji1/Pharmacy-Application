@@ -1,16 +1,16 @@
 package main.java.com.example.Pharmacy.Application.user.service;
 
-import com.example.Pharmacy.Application.cart.enums.CartStatus;
-import com.example.Pharmacy.Application.exception.DuplicateResourceException;
-import com.example.Pharmacy.Application.exception.RequestValidationException;
-import com.example.Pharmacy.Application.exception.ResourceNotFoundException;
-import com.example.Pharmacy.Application.order.enums.OrderStatus;
-import com.example.Pharmacy.Application.user.dao.CustomerDao;
-import com.example.Pharmacy.Application.user.dto.CustomerDTO;
-import com.example.Pharmacy.Application.user.mapper.CustomerDTOMapper;
-import com.example.Pharmacy.Application.user.model.Customer;
-import com.example.Pharmacy.Application.user.model.Pharmacist;
-import com.example.Pharmacy.Application.user.model.Veterinarian;
+import main.java.com.example.Pharmacy.Application.cart.enums.CartStatus;
+import main.java.com.example.Pharmacy.Application.exception.DuplicateResourceException;
+import main.java.com.example.Pharmacy.Application.exception.RequestValidationException;
+import main.java.com.example.Pharmacy.Application.exception.ResourceNotFoundException;
+import main.java.com.example.Pharmacy.Application.order.enums.OrderStatus;
+import main.java.com.example.Pharmacy.Application.user.dao.CustomerDao;
+import main.java.com.example.Pharmacy.Application.user.dto.CustomerDTO;
+import main.java.com.example.Pharmacy.Application.user.mapper.CustomerDTOMapper;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
+import main.java.com.example.Pharmacy.Application.user.model.Pharmacist;
+import main.java.com.example.Pharmacy.Application.user.model.Veterinarian;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

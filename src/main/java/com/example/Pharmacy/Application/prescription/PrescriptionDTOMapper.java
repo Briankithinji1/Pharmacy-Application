@@ -1,7 +1,7 @@
-package com.example.Pharmacy.Application.prescription;
+package main.java.com.example.Pharmacy.Application.prescription;
 
-import com.example.Pharmacy.Application.product.Product;
-import com.example.Pharmacy.Application.product.ProductDTO;
+import main.java.com.example.Pharmacy.Application.product.Product;
+import main.java.com.example.Pharmacy.Application.product.ProductDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;

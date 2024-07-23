@@ -1,14 +1,15 @@
-package com.example.Pharmacy.Application.product;
+package main.java.com.example.Pharmacy.Application.product;
 
-import com.example.Pharmacy.Application.cart.model.Cart;
-import com.example.Pharmacy.Application.category.Category;
-import com.example.Pharmacy.Application.prescription.Prescription;
-import com.example.Pharmacy.Application.user.model.Pharmacist;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import main.java.com.example.Pharmacy.Application.cart.model.Cart;
+import main.java.com.example.Pharmacy.Application.category.Category;
+import main.java.com.example.Pharmacy.Application.prescription.Prescription;
+import main.java.com.example.Pharmacy.Application.user.model.Pharmacist;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

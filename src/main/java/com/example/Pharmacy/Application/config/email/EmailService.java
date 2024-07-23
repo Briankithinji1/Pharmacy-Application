@@ -1,10 +1,10 @@
-package com.example.Pharmacy.Application.config.email;
+package main.java.com.example.Pharmacy.Application.config.email;
 
-import com.example.Pharmacy.Application.exception.CustomException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import main.java.com.example.Pharmacy.Application.exception.CustomException;
 import org.apache.camel.ProducerTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;

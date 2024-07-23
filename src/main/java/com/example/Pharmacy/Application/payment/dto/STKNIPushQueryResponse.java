@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.payment.dto;
+package main.java.com.example.Pharmacy.Application.payment.dto;
 
 public record STKNIPushQueryResponse(
         String ResponseCode,

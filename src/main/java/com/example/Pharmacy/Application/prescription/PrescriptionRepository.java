@@ -1,6 +1,5 @@
-package com.example.Pharmacy.Application.prescription;
+package main.java.com.example.Pharmacy.Application.prescription;
 
-import com.example.Pharmacy.Application.user.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,11 +1,11 @@
-package com.example.Pharmacy.Application.payment.service;
+package main.java.com.example.Pharmacy.Application.payment.service;
 
-import com.example.Pharmacy.Application.order.model.Order;
-import com.example.Pharmacy.Application.payment.repository.PaymentRepository;
-import com.example.Pharmacy.Application.payment.enums.PaymentType;
-import com.example.Pharmacy.Application.payment.dao.PaymentDao;
-import com.example.Pharmacy.Application.payment.model.Payment;
-import com.example.Pharmacy.Application.user.model.Customer;
+import main.java.com.example.Pharmacy.Application.order.model.Order;
+import main.java.com.example.Pharmacy.Application.payment.dao.PaymentDao;
+import main.java.com.example.Pharmacy.Application.payment.enums.PaymentType;
+import main.java.com.example.Pharmacy.Application.payment.model.Payment;
+import main.java.com.example.Pharmacy.Application.payment.repository.PaymentRepository;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

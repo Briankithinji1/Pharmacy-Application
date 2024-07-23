@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.category;
+package main.java.com.example.Pharmacy.Application.category;
 
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

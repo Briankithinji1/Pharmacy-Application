@@ -1,12 +1,12 @@
-package com.example.Pharmacy.Application.user.service;
+package main.java.com.example.Pharmacy.Application.user.service;
 
-import com.example.Pharmacy.Application.exception.DuplicateResourceException;
-import com.example.Pharmacy.Application.exception.RequestValidationException;
-import com.example.Pharmacy.Application.exception.ResourceNotFoundException;
-import com.example.Pharmacy.Application.user.dao.PharmacistDao;
-import com.example.Pharmacy.Application.user.dto.PharmacistDTO;
-import com.example.Pharmacy.Application.user.mapper.PharmacistDTOMapper;
-import com.example.Pharmacy.Application.user.model.Pharmacist;
+import main.java.com.example.Pharmacy.Application.exception.DuplicateResourceException;
+import main.java.com.example.Pharmacy.Application.exception.RequestValidationException;
+import main.java.com.example.Pharmacy.Application.exception.ResourceNotFoundException;
+import main.java.com.example.Pharmacy.Application.user.dao.PharmacistDao;
+import main.java.com.example.Pharmacy.Application.user.dto.PharmacistDTO;
+import main.java.com.example.Pharmacy.Application.user.mapper.PharmacistDTOMapper;
+import main.java.com.example.Pharmacy.Application.user.model.Pharmacist;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

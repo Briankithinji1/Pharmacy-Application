@@ -1,7 +1,9 @@
-package com.example.Pharmacy.Application.cart.dao;
+package main.java.com.example.Pharmacy.Application.cart.dao;
 
-import com.example.Pharmacy.Application.cart.model.Cart;
-import com.example.Pharmacy.Application.user.model.Customer;
+//import com.example.Pharmacy.Application.cart.model.Cart;
+//import com.example.Pharmacy.Application.user.model.Customer;
+import main.java.com.example.Pharmacy.Application.cart.model.Cart;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
 
 import java.util.List;
 import java.util.Optional;

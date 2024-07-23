@@ -1,11 +1,11 @@
 package main.java.com.example.Pharmacy.Application.user.dao;
 
-import com.example.Pharmacy.Application.cart.enums.CartStatus;
-import com.example.Pharmacy.Application.order.enums.OrderStatus;
-import com.example.Pharmacy.Application.user.model.Customer;
-import com.example.Pharmacy.Application.user.model.Pharmacist;
-import com.example.Pharmacy.Application.user.model.Veterinarian;
-import com.example.Pharmacy.Application.user.repository.CustomerRepository;
+import main.java.com.example.Pharmacy.Application.cart.enums.CartStatus;
+import main.java.com.example.Pharmacy.Application.order.enums.OrderStatus;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
+import main.java.com.example.Pharmacy.Application.user.model.Pharmacist;
+import main.java.com.example.Pharmacy.Application.user.model.Veterinarian;
+import main.java.com.example.Pharmacy.Application.user.repository.CustomerRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;

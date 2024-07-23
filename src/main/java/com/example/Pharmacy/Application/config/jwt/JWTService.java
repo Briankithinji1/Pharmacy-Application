@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.config.jwt;
+package main.java.com.example.Pharmacy.Application.config.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

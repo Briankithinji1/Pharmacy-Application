@@ -1,9 +1,9 @@
-package com.example.Pharmacy.Application.user.controller;
+package main.java.com.example.Pharmacy.Application.user.controller;
 
-import com.example.Pharmacy.Application.user.dto.PharmacistDTO;
-import com.example.Pharmacy.Application.user.model.Pharmacist;
-import com.example.Pharmacy.Application.user.service.PharmacistService;
 import lombok.RequiredArgsConstructor;
+import main.java.com.example.Pharmacy.Application.user.dto.PharmacistDTO;
+import main.java.com.example.Pharmacy.Application.user.model.Pharmacist;
+import main.java.com.example.Pharmacy.Application.user.service.PharmacistService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

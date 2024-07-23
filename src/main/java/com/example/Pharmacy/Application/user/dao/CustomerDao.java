@@ -1,10 +1,10 @@
 package main.java.com.example.Pharmacy.Application.user.dao;
 
-import com.example.Pharmacy.Application.cart.enums.CartStatus;
-import com.example.Pharmacy.Application.order.enums.OrderStatus;
-import com.example.Pharmacy.Application.user.model.Customer;
-import com.example.Pharmacy.Application.user.model.Pharmacist;
-import com.example.Pharmacy.Application.user.model.Veterinarian;
+import main.java.com.example.Pharmacy.Application.cart.enums.CartStatus;
+import main.java.com.example.Pharmacy.Application.order.enums.OrderStatus;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
+import main.java.com.example.Pharmacy.Application.user.model.Pharmacist;
+import main.java.com.example.Pharmacy.Application.user.model.Veterinarian;
 
 import java.util.List;
 import java.util.Optional;

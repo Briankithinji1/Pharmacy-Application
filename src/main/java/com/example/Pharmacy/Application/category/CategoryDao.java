@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.category;
+package main.java.com.example.Pharmacy.Application.category;
 
 import java.util.List;
 import java.util.Optional;

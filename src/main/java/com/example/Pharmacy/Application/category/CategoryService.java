@@ -1,7 +1,7 @@
-package com.example.Pharmacy.Application.category;
+package main.java.com.example.Pharmacy.Application.category;
 
-import com.example.Pharmacy.Application.exception.RequestValidationException;
-import com.example.Pharmacy.Application.exception.ResourceNotFoundException;
+import main.java.com.example.Pharmacy.Application.exception.RequestValidationException;
+import main.java.com.example.Pharmacy.Application.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,14 +1,14 @@
-package com.example.Pharmacy.Application.cart.controller;
+package main.java.com.example.Pharmacy.Application.cart.controller;
 
-import com.example.Pharmacy.Application.cart.dto.AddToCartDto;
-import com.example.Pharmacy.Application.cart.model.Cart;
-import com.example.Pharmacy.Application.cart.dto.CartDTO;
-import com.example.Pharmacy.Application.cart.service.CartService;
-import com.example.Pharmacy.Application.product.Product;
-import com.example.Pharmacy.Application.product.ProductDTO;
-import com.example.Pharmacy.Application.product.ProductService;
-import com.example.Pharmacy.Application.user.model.Customer;
 import lombok.RequiredArgsConstructor;
+import main.java.com.example.Pharmacy.Application.cart.dto.AddToCartDto;
+import main.java.com.example.Pharmacy.Application.cart.dto.CartDTO;
+import main.java.com.example.Pharmacy.Application.cart.model.Cart;
+import main.java.com.example.Pharmacy.Application.cart.service.CartService;
+import main.java.com.example.Pharmacy.Application.product.Product;
+import main.java.com.example.Pharmacy.Application.product.ProductDTO;
+import main.java.com.example.Pharmacy.Application.product.ProductService;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

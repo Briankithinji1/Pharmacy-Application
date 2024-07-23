@@ -1,7 +1,7 @@
-package com.example.Pharmacy.Application.user.dao;
+package main.java.com.example.Pharmacy.Application.user.dao;
 
-import com.example.Pharmacy.Application.user.model.Pharmacist;
-import com.example.Pharmacy.Application.user.repository.PharmacistRepository;
+import main.java.com.example.Pharmacy.Application.user.model.Pharmacist;
+import main.java.com.example.Pharmacy.Application.user.repository.PharmacistRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;

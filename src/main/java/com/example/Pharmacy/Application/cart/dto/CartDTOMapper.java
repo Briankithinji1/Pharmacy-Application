@@ -1,6 +1,7 @@
-package com.example.Pharmacy.Application.cart.dto;
+package main.java.com.example.Pharmacy.Application.cart.dto;
 
-import com.example.Pharmacy.Application.cart.model.Cart;
+//import com.example.Pharmacy.Application.cart.model.Cart;
+import main.java.com.example.Pharmacy.Application.cart.model.Cart;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -15,7 +16,7 @@ public class CartDTOMapper implements Function<Cart, CartDTO> {
         List<CartItemDTO> cartItemDTOS = mapCartItems(cart);
         return new CartDTO(
                 cartItemDTOS,
-                cart.getTotalPrice()
+                cart.getTotalPrice().doubleValue()
         );
     }
 

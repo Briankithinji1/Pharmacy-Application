@@ -7,6 +7,6 @@ public record CustomerDTO(
         String email,
         String phoneNumber,
         String address,
-        String medicalHistory
-) {
+        String medicalHistory,
+        String history) {
 }

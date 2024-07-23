@@ -1,7 +1,9 @@
-package com.example.Pharmacy.Application.product;
+package test.java.com.example.Pharmacy.Application.product;
 
-import com.example.Pharmacy.Application.category.Category;
-import com.example.Pharmacy.Application.category.CategoryRepository;
+import main.java.com.example.Pharmacy.Application.category.Category;
+import main.java.com.example.Pharmacy.Application.category.CategoryRepository;
+import main.java.com.example.Pharmacy.Application.product.Product;
+import main.java.com.example.Pharmacy.Application.product.ProductRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

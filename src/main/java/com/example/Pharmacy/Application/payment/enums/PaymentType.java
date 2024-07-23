@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.payment.enums;
+package main.java.com.example.Pharmacy.Application.payment.enums;
 
 import java.util.Collections;
 import java.util.List;

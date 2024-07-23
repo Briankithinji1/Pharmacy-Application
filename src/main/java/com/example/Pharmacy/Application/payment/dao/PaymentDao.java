@@ -1,9 +1,9 @@
-package com.example.Pharmacy.Application.payment.dao;
+package main.java.com.example.Pharmacy.Application.payment.dao;
 
-import com.example.Pharmacy.Application.order.model.Order;
-import com.example.Pharmacy.Application.payment.enums.PaymentType;
-import com.example.Pharmacy.Application.payment.model.Payment;
-import com.example.Pharmacy.Application.user.model.Customer;
+import main.java.com.example.Pharmacy.Application.order.model.Order;
+import main.java.com.example.Pharmacy.Application.payment.enums.PaymentType;
+import main.java.com.example.Pharmacy.Application.payment.model.Payment;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
 
 import java.util.List;
 import java.util.Optional;

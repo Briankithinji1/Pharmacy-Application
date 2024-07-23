@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.product;
+package main.java.com.example.Pharmacy.Application.product;
 
 public record ProductDTO(
         Long productId,

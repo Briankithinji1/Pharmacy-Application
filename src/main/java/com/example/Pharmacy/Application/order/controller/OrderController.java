@@ -1,10 +1,10 @@
-package com.example.Pharmacy.Application.order.controller;
+package main.java.com.example.Pharmacy.Application.order.controller;
 
-import com.example.Pharmacy.Application.order.dto.OrderDTO;
-import com.example.Pharmacy.Application.order.enums.OrderStatus;
-import com.example.Pharmacy.Application.order.service.OrderService;
-import com.example.Pharmacy.Application.order.model.Order;
-import com.example.Pharmacy.Application.user.model.Customer;
+import main.java.com.example.Pharmacy.Application.order.dto.OrderDTO;
+import main.java.com.example.Pharmacy.Application.order.enums.OrderStatus;
+import main.java.com.example.Pharmacy.Application.order.service.OrderService;
+import main.java.com.example.Pharmacy.Application.order.model.Order;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

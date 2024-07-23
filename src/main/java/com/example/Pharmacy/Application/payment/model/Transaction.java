@@ -1,12 +1,12 @@
-package com.example.Pharmacy.Application.payment.model;
+package main.java.com.example.Pharmacy.Application.payment.model;
 
-import com.example.Pharmacy.Application.order.model.Order;
-import com.example.Pharmacy.Application.payment.enums.PaymentType;
-import com.example.Pharmacy.Application.payment.enums.TransactionStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import main.java.com.example.Pharmacy.Application.order.model.Order;
+import main.java.com.example.Pharmacy.Application.payment.enums.PaymentType;
+import main.java.com.example.Pharmacy.Application.payment.enums.TransactionStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

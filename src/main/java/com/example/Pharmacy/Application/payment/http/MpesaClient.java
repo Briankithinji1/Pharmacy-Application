@@ -1,6 +1,6 @@
-package com.example.Pharmacy.Application.payment.http;
+package main.java.com.example.Pharmacy.Application.payment.http;
 
-import com.example.Pharmacy.Application.payment.dto.*;
+import main.java.com.example.Pharmacy.Application.payment.dto.*;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.service.annotation.PostExchange;
 

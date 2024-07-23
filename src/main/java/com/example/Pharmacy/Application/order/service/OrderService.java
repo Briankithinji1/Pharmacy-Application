@@ -1,20 +1,21 @@
-package com.example.Pharmacy.Application.order.service;
+package main.java.com.example.Pharmacy.Application.order.service;
 
-import com.example.Pharmacy.Application.cart.dto.CartDTO;
-import com.example.Pharmacy.Application.cart.dto.CartItemDTO;
-import com.example.Pharmacy.Application.cart.service.CartService;
-import com.example.Pharmacy.Application.exception.RequestValidationException;
-import com.example.Pharmacy.Application.exception.ResourceNotFoundException;
-import com.example.Pharmacy.Application.order.dao.OrderDao;
-import com.example.Pharmacy.Application.order.dto.OrderDTO;
-import com.example.Pharmacy.Application.order.dto.OrderDTOMapper;
-import com.example.Pharmacy.Application.order.enums.OrderStatus;
-import com.example.Pharmacy.Application.order.model.Order;
-import com.example.Pharmacy.Application.order.model.OrderItem;
-import com.example.Pharmacy.Application.order.repository.OrderItemRepository;
-import com.example.Pharmacy.Application.user.model.Customer;
+import main.java.com.example.Pharmacy.Application.cart.dto.CartDTO;
+import main.java.com.example.Pharmacy.Application.cart.dto.CartItemDTO;
+import main.java.com.example.Pharmacy.Application.cart.service.CartService;
+import main.java.com.example.Pharmacy.Application.exception.RequestValidationException;
+import main.java.com.example.Pharmacy.Application.exception.ResourceNotFoundException;
+import main.java.com.example.Pharmacy.Application.order.dao.OrderDao;
+import main.java.com.example.Pharmacy.Application.order.dto.OrderDTO;
+import main.java.com.example.Pharmacy.Application.order.dto.OrderDTOMapper;
+import main.java.com.example.Pharmacy.Application.order.enums.OrderStatus;
+import main.java.com.example.Pharmacy.Application.order.model.Order;
+import main.java.com.example.Pharmacy.Application.order.model.OrderItem;
+import main.java.com.example.Pharmacy.Application.order.repository.OrderItemRepository;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -91,7 +92,7 @@ public class OrderService {
         Order newOrder = new Order();
         newOrder.setOrderDate(LocalDateTime.now());
         newOrder.setCustomer(customer);
-        newOrder.setTotalPrice(cartDTO.totalPrice());
+        newOrder.setTotalPrice(BigDecimal.valueOf(cartDTO.totalPrice()));
         newOrder.setStatus(OrderStatus.PENDING); // Initial status
         // ToDo: Add other order fields
         orderDao.insertOrder(newOrder);
@@ -103,7 +104,7 @@ public class OrderService {
             // Create orderItem and save
             OrderItem orderItem = new OrderItem();
             orderItem.setCreatedDate(new Date());
-            orderItem.setPrice(cartItemDTO.product().getPrice());
+            orderItem.setPrice(BigDecimal.valueOf(cartItemDTO.product().getPrice()));
             orderItem.setProduct(cartItemDTO.product());
             orderItem.setQuantity(cartItemDTO.quantity());
             orderItem.setOrder(newOrder);

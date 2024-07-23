@@ -1,12 +1,12 @@
-package com.example.Pharmacy.Application.order.model;
+package main.java.com.example.Pharmacy.Application.order.model;
 
-import com.example.Pharmacy.Application.product.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import main.java.com.example.Pharmacy.Application.product.Product;
 
 import java.math.BigDecimal;
 import java.util.Date;

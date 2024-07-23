@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.user.model;
+package main.java.com.example.Pharmacy.Application.user.model;
 
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;

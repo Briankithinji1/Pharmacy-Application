@@ -1,6 +1,6 @@
-package com.example.Pharmacy.Application.payment.dto;
+package main.java.com.example.Pharmacy.Application.payment.dto;
 
-import com.example.Pharmacy.Application.payment.enums.TransactionStatus;
+import main.java.com.example.Pharmacy.Application.payment.enums.TransactionStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

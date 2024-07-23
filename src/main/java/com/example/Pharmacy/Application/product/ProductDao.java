@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.product;
+package main.java.com.example.Pharmacy.Application.product;
 
 import java.util.List;
 import java.util.Optional;

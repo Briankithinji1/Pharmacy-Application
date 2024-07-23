@@ -1,6 +1,6 @@
-package com.example.Pharmacy.Application.user.repository;
+package main.java.com.example.Pharmacy.Application.user.repository;
 
-import com.example.Pharmacy.Application.user.model.Pharmacist;
+import main.java.com.example.Pharmacy.Application.user.model.Pharmacist;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

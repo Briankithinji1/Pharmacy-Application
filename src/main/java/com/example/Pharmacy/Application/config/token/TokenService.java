@@ -1,6 +1,6 @@
-package com.example.Pharmacy.Application.config.token;
+package main.java.com.example.Pharmacy.Application.config.token;
 
-import com.example.Pharmacy.Application.user.model.User;
+import main.java.com.example.Pharmacy.Application.user.model.User;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

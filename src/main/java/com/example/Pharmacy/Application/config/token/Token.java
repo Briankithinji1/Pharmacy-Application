@@ -1,11 +1,11 @@
-package com.example.Pharmacy.Application.config.token;
+package main.java.com.example.Pharmacy.Application.config.token;
 
-import com.example.Pharmacy.Application.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import main.java.com.example.Pharmacy.Application.user.model.User;
 
 import java.time.LocalDateTime;
 

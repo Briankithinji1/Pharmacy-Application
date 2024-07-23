@@ -1,8 +1,6 @@
-package com.example.Pharmacy.Application.order.dto;
+package main.java.com.example.Pharmacy.Application.order.dto;
 
-import com.example.Pharmacy.Application.order.dto.OrderDTO;
-import com.example.Pharmacy.Application.order.model.Order;
-import com.example.Pharmacy.Application.product.ProductDTO;
+import main.java.com.example.Pharmacy.Application.order.model.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +17,7 @@ public class OrderDTOMapper implements Function<Order, OrderDTO> {
 //                order.getDescription(),
                 order.getStatus(),
                 order.getQuantity(),
-                order.getTotalPrice()
+                order.getTotalPrice().doubleValue()
         );
     }
 }

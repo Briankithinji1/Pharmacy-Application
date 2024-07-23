@@ -1,8 +1,8 @@
-package com.example.Pharmacy.Application.payment.dto;
+package main.java.com.example.Pharmacy.Application.payment.dto;
 
-import com.example.Pharmacy.Application.order.dto.OrderDTO;
-import com.example.Pharmacy.Application.payment.enums.PaymentType;
-import com.example.Pharmacy.Application.user.dto.CustomerDTO;
+import main.java.com.example.Pharmacy.Application.order.dto.OrderDTO;
+import main.java.com.example.Pharmacy.Application.payment.enums.PaymentType;
+import main.java.com.example.Pharmacy.Application.user.dto.CustomerDTO;
 
 import java.math.BigDecimal;
 

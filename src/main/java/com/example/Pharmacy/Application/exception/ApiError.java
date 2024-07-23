@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.exception;
+package main.java.com.example.Pharmacy.Application.exception;
 
 import java.time.LocalDateTime;
 

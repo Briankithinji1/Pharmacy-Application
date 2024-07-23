@@ -1,17 +1,17 @@
-package com.example.Pharmacy.Application.config.auth;
+package main.java.com.example.Pharmacy.Application.config.auth;
 
-import com.example.Pharmacy.Application.config.email.EmailService;
-import com.example.Pharmacy.Application.config.jwt.JWTService;
-import com.example.Pharmacy.Application.config.password.ResetPasswordRequest;
-import com.example.Pharmacy.Application.config.security.SecurityService;
-import com.example.Pharmacy.Application.config.token.TokenService;
-import com.example.Pharmacy.Application.exception.ResourceNotFoundException;
-import com.example.Pharmacy.Application.user.model.Role;
-import com.example.Pharmacy.Application.user.model.User;
-import com.example.Pharmacy.Application.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import main.java.com.example.Pharmacy.Application.config.email.EmailService;
+import main.java.com.example.Pharmacy.Application.config.jwt.JWTService;
+import main.java.com.example.Pharmacy.Application.config.password.ResetPasswordRequest;
+import main.java.com.example.Pharmacy.Application.config.security.SecurityService;
+import main.java.com.example.Pharmacy.Application.config.token.TokenService;
+import main.java.com.example.Pharmacy.Application.exception.ResourceNotFoundException;
+import main.java.com.example.Pharmacy.Application.user.model.Role;
+import main.java.com.example.Pharmacy.Application.user.model.User;
+import main.java.com.example.Pharmacy.Application.user.repository.UserRepository;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;

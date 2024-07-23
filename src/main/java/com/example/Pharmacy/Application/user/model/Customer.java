@@ -1,14 +1,14 @@
-package com.example.Pharmacy.Application.user.model;
+package main.java.com.example.Pharmacy.Application.user.model;
 
-import com.example.Pharmacy.Application.cart.model.Cart;
-import com.example.Pharmacy.Application.order.model.Order;
-import com.example.Pharmacy.Application.payment.model.Payment;
-import com.example.Pharmacy.Application.prescription.Prescription;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import main.java.com.example.Pharmacy.Application.cart.model.Cart;
+import main.java.com.example.Pharmacy.Application.order.model.Order;
+import main.java.com.example.Pharmacy.Application.payment.model.Payment;
+import main.java.com.example.Pharmacy.Application.prescription.Prescription;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class Customer extends User {
                     @Index(name = "idx_customer_pharmacist_pharmacist_id", columnList = "pharmacistId")
             }
     )
-    private List<com.example.Pharmacy.Application.user.model.Pharmacist> assignedPharmacist = new ArrayList<>();
+    private List<Pharmacist> assignedPharmacist = new ArrayList<>();
 
     // ToDo: One To Many relationship with payments, delivery, feedback
 

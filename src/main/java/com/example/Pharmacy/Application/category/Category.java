@@ -1,11 +1,12 @@
-package com.example.Pharmacy.Application.category;
+package main.java.com.example.Pharmacy.Application.category;
 
-import com.example.Pharmacy.Application.product.Product;
+//import com.example.Pharmacy.Application.product.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import main.java.com.example.Pharmacy.Application.product.Product;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package com.example.Pharmacy.Application.payment.config;
+package main.java.com.example.Pharmacy.Application.payment.config;
 
-import com.example.Pharmacy.Application.payment.http.MpesaClient;
-import com.example.Pharmacy.Application.payment.service.MpesaAuthenticationService;
 import lombok.RequiredArgsConstructor;
+import main.java.com.example.Pharmacy.Application.payment.http.MpesaClient;
+import main.java.com.example.Pharmacy.Application.payment.service.MpesaAuthenticationService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

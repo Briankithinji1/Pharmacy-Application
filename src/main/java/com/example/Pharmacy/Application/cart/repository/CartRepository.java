@@ -1,7 +1,9 @@
-package com.example.Pharmacy.Application.cart.repository;
+package main.java.com.example.Pharmacy.Application.cart.repository;
 
-import com.example.Pharmacy.Application.cart.model.Cart;
-import com.example.Pharmacy.Application.user.model.Customer;
+//import com.example.Pharmacy.Application.cart.model.Cart;
+//import com.example.Pharmacy.Application.user.model.Customer;
+import main.java.com.example.Pharmacy.Application.cart.model.Cart;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

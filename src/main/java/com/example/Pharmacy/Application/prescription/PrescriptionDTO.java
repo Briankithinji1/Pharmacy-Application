@@ -1,6 +1,6 @@
-package com.example.Pharmacy.Application.prescription;
+package main.java.com.example.Pharmacy.Application.prescription;
 
-import com.example.Pharmacy.Application.product.ProductDTO;
+import main.java.com.example.Pharmacy.Application.product.ProductDTO;
 
 public record PrescriptionDTO(
         Long prescriptionId,

@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.config.password;
+package main.java.com.example.Pharmacy.Application.config.password;
 
 public record ResetPasswordRequest(
 //        String resetToken,

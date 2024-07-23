@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.cart.dto;
+package main.java.com.example.Pharmacy.Application.cart.dto;
 
 import jakarta.validation.constraints.NotNull;
 

@@ -1,4 +1,4 @@
-package com.example.Pharmacy.Application.product;
+package main.java.com.example.Pharmacy.Application.product;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

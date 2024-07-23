@@ -1,6 +1,5 @@
-package com.example.Pharmacy.Application.user.model;
+package main.java.com.example.Pharmacy.Application.user.model;
 
-import com.example.Pharmacy.Application.product.Product;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
@@ -8,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import main.java.com.example.Pharmacy.Application.product.Product;
 
 import java.util.ArrayList;
 import java.util.List;

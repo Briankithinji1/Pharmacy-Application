@@ -1,14 +1,14 @@
-package com.example.Pharmacy.Application.user.controller;
+package main.java.com.example.Pharmacy.Application.user.controller;
 
-import com.example.Pharmacy.Application.cart.enums.CartStatus;
-import com.example.Pharmacy.Application.exception.ResourceNotFoundException;
-import com.example.Pharmacy.Application.order.enums.OrderStatus;
-import com.example.Pharmacy.Application.user.dto.CustomerDTO;
-import com.example.Pharmacy.Application.user.model.Customer;
-import com.example.Pharmacy.Application.user.model.Pharmacist;
-import com.example.Pharmacy.Application.user.repository.PharmacistRepository;
-import com.example.Pharmacy.Application.user.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import main.java.com.example.Pharmacy.Application.cart.enums.CartStatus;
+import main.java.com.example.Pharmacy.Application.exception.ResourceNotFoundException;
+import main.java.com.example.Pharmacy.Application.order.enums.OrderStatus;
+import main.java.com.example.Pharmacy.Application.user.dto.CustomerDTO;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
+import main.java.com.example.Pharmacy.Application.user.model.Pharmacist;
+import main.java.com.example.Pharmacy.Application.user.repository.PharmacistRepository;
+import main.java.com.example.Pharmacy.Application.user.service.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

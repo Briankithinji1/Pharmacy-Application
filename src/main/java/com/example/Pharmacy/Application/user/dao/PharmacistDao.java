@@ -1,6 +1,6 @@
-package com.example.Pharmacy.Application.user.dao;
+package main.java.com.example.Pharmacy.Application.user.dao;
 
-import com.example.Pharmacy.Application.user.model.Pharmacist;
+import main.java.com.example.Pharmacy.Application.user.model.Pharmacist;
 
 import java.util.List;
 import java.util.Optional;

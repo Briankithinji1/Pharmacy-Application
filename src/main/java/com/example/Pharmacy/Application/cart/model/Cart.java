@@ -1,13 +1,14 @@
 package main.java.com.example.Pharmacy.Application.cart.model;
 
-import com.example.Pharmacy.Application.cart.enums.CartStatus;
-import com.example.Pharmacy.Application.product.Product;
-import com.example.Pharmacy.Application.user.model.Customer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import main.java.com.example.Pharmacy.Application.cart.enums.CartStatus;
+import main.java.com.example.Pharmacy.Application.product.Product;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +23,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
     private Integer quantity;
-    private Double totalPrice;
+    private BigDecimal totalPrice;
     private CartStatus status;
     private Date createdDate;
 

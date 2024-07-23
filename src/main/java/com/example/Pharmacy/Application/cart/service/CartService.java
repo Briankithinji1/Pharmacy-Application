@@ -1,16 +1,16 @@
-package com.example.Pharmacy.Application.cart.service;
+package main.java.com.example.Pharmacy.Application.cart.service;
 
-import com.example.Pharmacy.Application.cart.dao.CartDao;
-import com.example.Pharmacy.Application.cart.dto.AddToCartDto;
-import com.example.Pharmacy.Application.cart.dto.CartDTO;
-import com.example.Pharmacy.Application.cart.dto.CartDTOMapper;
-import com.example.Pharmacy.Application.cart.dto.CartItemDTO;
-import com.example.Pharmacy.Application.cart.exception.CartItemNotExistException;
-import com.example.Pharmacy.Application.cart.model.Cart;
-import com.example.Pharmacy.Application.exception.RequestValidationException;
-import com.example.Pharmacy.Application.exception.ResourceNotFoundException;
-import com.example.Pharmacy.Application.product.Product;
-import com.example.Pharmacy.Application.user.model.Customer;
+import main.java.com.example.Pharmacy.Application.cart.dao.CartDao;
+import main.java.com.example.Pharmacy.Application.cart.dto.AddToCartDto;
+import main.java.com.example.Pharmacy.Application.cart.dto.CartDTO;
+import main.java.com.example.Pharmacy.Application.cart.dto.CartDTOMapper;
+import main.java.com.example.Pharmacy.Application.cart.dto.CartItemDTO;
+import main.java.com.example.Pharmacy.Application.cart.exception.CartItemNotExistException;
+import main.java.com.example.Pharmacy.Application.cart.model.Cart;
+import main.java.com.example.Pharmacy.Application.exception.RequestValidationException;
+import main.java.com.example.Pharmacy.Application.exception.ResourceNotFoundException;
+import main.java.com.example.Pharmacy.Application.product.Product;
+import main.java.com.example.Pharmacy.Application.user.model.Customer;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

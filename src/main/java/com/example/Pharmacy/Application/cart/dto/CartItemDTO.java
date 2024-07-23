@@ -1,8 +1,8 @@
-package com.example.Pharmacy.Application.cart.dto;
+package main.java.com.example.Pharmacy.Application.cart.dto;
 
-import com.example.Pharmacy.Application.cart.model.Cart;
-import com.example.Pharmacy.Application.product.Product;
 import jakarta.validation.constraints.NotNull;
+import main.java.com.example.Pharmacy.Application.cart.model.Cart;
+import main.java.com.example.Pharmacy.Application.product.Product;
 
 public record CartItemDTO(
         Long cartItemId,

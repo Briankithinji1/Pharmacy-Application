@@ -1,7 +1,7 @@
-package com.example.Pharmacy.Application.user.dao;
+package main.java.com.example.Pharmacy.Application.user.dao;
 
-import com.example.Pharmacy.Application.user.model.User;
-import com.example.Pharmacy.Application.user.repository.UserRepository;
+import main.java.com.example.Pharmacy.Application.user.model.User;
+import main.java.com.example.Pharmacy.Application.user.repository.UserRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
