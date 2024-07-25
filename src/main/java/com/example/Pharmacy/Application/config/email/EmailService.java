@@ -4,15 +4,15 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import main.java.com.example.Pharmacy.Application.exception.CustomException;
-import org.apache.camel.ProducerTemplate;
+import main.java.com.example.Pharmacy.Application.exception.EmailSendingException;
+import org.springframework.core.env.Environment;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
-import java.util.Locale;
 import java.util.Map;
 
 @Service
@@ -20,30 +20,30 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class EmailService {
 
-    private ProducerTemplate producerTemplate;
+    private KafkaTemplate<String, String> kafkaTemplate;
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
-
-    // TODO: Add Logo
-//    @Value("classpath:/static/images/logo.png")
-//    private Resource resourceFile;
+    private final Environment environment;
 
     public void sendMessageUsingThymeleafTemplate(
-            String[] to, String subject, Map<String, Object> templateModel, String template, Locale locale
+            String[] to, String subject, Map<String, Object> templateModel, String template
     ) {
         Context thymeleafContext = new Context();
-        thymeleafContext.setLocale(locale);
-        thymeleafContext.setVariables(templateModel);
 
+        // Optional: Set locale if needed in the future
+        // thymeleafContext.setLocale(locale);
+
+        thymeleafContext.setVariables(templateModel);
+        thymeleafContext.setVariable("environment", environment);
         String htmlBody = templateEngine.process(template, thymeleafContext);
 
         // Send the email payload to Kafka asynchronously
-        producerTemplate.sendBody("direct:emailProducer", htmlBody);
+        kafkaTemplate.send("emailTopic", htmlBody);
         
         try {
             sendHtmlMessage(to, subject, htmlBody);
         } catch (MessagingException e) {
-            throw new CustomException("Can't send the email");
+            throw new EmailSendingException("Failed to send the email");
         }
     }
 

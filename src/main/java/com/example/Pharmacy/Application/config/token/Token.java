@@ -17,12 +17,14 @@ import java.time.LocalDateTime;
 public class Token {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue()
     private Long id;
 
     @Column(unique = true)
     private String token;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdAt;
+    private LocalDateTime expiresAt;
+    private LocalDateTime validatedAt;
 
     private boolean revoked;
     private boolean expired;

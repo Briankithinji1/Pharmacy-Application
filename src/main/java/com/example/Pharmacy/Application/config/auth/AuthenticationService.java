@@ -1,17 +1,22 @@
 package main.java.com.example.Pharmacy.Application.config.auth;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import main.java.com.example.Pharmacy.Application.config.email.EmailService;
 import main.java.com.example.Pharmacy.Application.config.jwt.JWTService;
 import main.java.com.example.Pharmacy.Application.config.password.ResetPasswordRequest;
 import main.java.com.example.Pharmacy.Application.config.security.SecurityService;
+import main.java.com.example.Pharmacy.Application.config.token.Token;
+import main.java.com.example.Pharmacy.Application.config.token.TokenRepository;
 import main.java.com.example.Pharmacy.Application.config.token.TokenService;
 import main.java.com.example.Pharmacy.Application.exception.ResourceNotFoundException;
 import main.java.com.example.Pharmacy.Application.user.model.Role;
 import main.java.com.example.Pharmacy.Application.user.model.User;
 import main.java.com.example.Pharmacy.Application.user.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,10 +24,13 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -39,11 +47,15 @@ public class AuthenticationService {
     private final SecurityService securityService;
     private final EmailService emailService;
     private final MessageSource messageSource;
+    private final TokenRepository tokenRepository;
 
     private String frontendUrl;
     private String[] recipients;
 
-    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, JWTService jwtService, AuthenticationManager authenticationManager, TokenService tokenService, SecurityService securityService, EmailService emailService, MessageSource messageSource) {
+    @Value("${mailing.frontend.activation-url}")
+    private String activationUrl;
+
+    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, JWTService jwtService, AuthenticationManager authenticationManager, TokenService tokenService, SecurityService securityService, EmailService emailService, MessageSource messageSource, TokenRepository tokenRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
@@ -52,22 +64,27 @@ public class AuthenticationService {
         this.securityService = securityService;
         this.emailService = emailService;
         this.messageSource = messageSource;
+        this.tokenRepository = tokenRepository;
     }
 
-    public void register(RegisterRequest registerRequest) {
+    public void register(RegisterRequest request) throws MessagingException {
         var principal = User.builder()
-                .firstname(registerRequest.firstname())
-                .lastname(registerRequest.lastname())
-                .email(registerRequest.email())
-                .password(passwordEncoder.encode(registerRequest.password()))
-                .role(Role.USER)
+                .firstname(request.firstname())
+                .lastname(request.lastname())
+                .email(request.email())
+                .password(passwordEncoder.encode(request.password()))
+                .accountLocked(false)
+                .enabled(false)
+                .role(request.toUser().getRole())
                 .build();
         userRepository.save(principal);
-//        User user = registerRequest.toUser();
-        String accessToken = jwtService.issueToken(principal.getEmail());
-        String refreshToken = jwtService.issueRefreshToken(principal.getEmail());
-        tokenService.saveUserToken(principal, accessToken);
-        new AuthenticationResponse(accessToken, refreshToken);
+
+        sendValidationEmail(principal);
+
+//        String accessToken = jwtService.issueToken(principal.getEmail());
+//        String refreshToken = jwtService.issueRefreshToken(principal.getEmail());
+//        tokenService.saveUserToken(principal, accessToken);
+//        new AuthenticationResponse(accessToken, refreshToken);
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest authRequest) {
@@ -142,11 +159,75 @@ public class AuthenticationService {
             put("loginLink", frontendUrl + "/auth/login?email=" + finalEmail);
             put("password", password);
         }};
-        emailService.sendMessageUsingThymeleafTemplate(new String[]{email}, messageSource.getMessage("password_reset", null, getLocale(user)), variables, "reset-password.html", getLocale(user));
+        emailService.sendMessageUsingThymeleafTemplate(new String[]{email}, messageSource.getMessage("password_reset", null, getLocale(user)), variables, "reset-password.html");
         return "Password reset successfully";
     }
 
     private Locale getLocale(User user) {
         return Locale.getDefault();
+    }
+
+
+    @Transactional
+    private void activateAccount(String token) throws MessagingException {
+        Token savedToken = tokenRepository.findByToken(token)
+                .orElseThrow(() -> new RuntimeException("Invalid Token"));
+
+        if (LocalDateTime.now().isAfter(savedToken.getExpiresAt())) {
+            sendValidationEmail(savedToken.getUser());
+            throw new RuntimeException("Activation token has expired. A new token has been sent to the same email address.");
+        }
+
+        var user = userRepository.findById(savedToken.getUser().getUserId())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        user.setEnabled(true);
+        userRepository.save(user);
+
+        savedToken.setValidatedAt(LocalDateTime.now());
+        tokenRepository.save(savedToken);
+    }
+
+    private String generateAndSaveActivationToken(User user) {
+        // Generate a token
+        String generatedToken = generateActivationCode();
+        var token = Token.builder()
+                .token(generatedToken)
+                .createdAt(LocalDateTime.now())
+                .expiresAt(LocalDateTime.now().plusMinutes(15))
+                .user(user)
+                .build();
+        tokenRepository.save(token);
+
+        return generatedToken;
+    }
+
+    private void sendValidationEmail(User user) throws MessagingException {
+        var newToken = generateAndSaveActivationToken(user);
+
+        String[] to = { user.getEmail() };
+        String subject = "Account Activation";
+        Map<String, Object> templateModel = new HashMap<>();
+        templateModel.put("name", user.getFullName());
+        templateModel.put("activationLink", activationUrl + "?token=" + newToken);
+
+        String template = "activationEmailTemplate";
+
+        emailService.sendMessageUsingThymeleafTemplate(to, subject, templateModel, template);
+    }
+
+    // Method to Generate Validation Code
+    private String generateActivationCode() {
+        String characters = "0123456789";
+        StringBuilder codeBuilder = new StringBuilder();
+
+        SecureRandom secureRandom = new SecureRandom();
+
+        // Generate a random activation code of the specified length
+        for (int i = 0; i < 6; i++) {
+            int randomIndex = secureRandom.nextInt(characters.length());
+            codeBuilder.append(characters.charAt(randomIndex));
+        }
+
+        return codeBuilder.toString();
     }
 }

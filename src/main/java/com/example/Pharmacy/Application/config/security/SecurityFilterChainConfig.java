@@ -58,7 +58,11 @@ public class SecurityFilterChainConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(getRequestMatchers()).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAuthority(String.valueOf(Role.ADMIN))
-                        .requestMatchers(new AntPathRequestMatcher("/user/**")).hasAuthority(String.valueOf(Role.USER))
+                        .requestMatchers(new AntPathRequestMatcher("/customer/**")).hasAuthority(String.valueOf(Role.CUSTOMER))
+                        .requestMatchers(new AntPathRequestMatcher("/pharmacist/**")).hasAuthority(String.valueOf(Role.PHARMACIST))
+                        .requestMatchers(new AntPathRequestMatcher("/courier/**")).hasAuthority(String.valueOf(Role.COURIER))
+                        .requestMatchers(new AntPathRequestMatcher("/veterinarian/**")).hasAuthority(String.valueOf(Role.VETERINARIAN))
+                        .requestMatchers(new AntPathRequestMatcher("/finance_manager/**")).hasAuthority(String.valueOf(Role.FINANCE_MANAGER))
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager

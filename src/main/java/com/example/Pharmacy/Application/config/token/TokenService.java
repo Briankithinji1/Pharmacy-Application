@@ -19,7 +19,7 @@ public class TokenService {
         var token = Token.builder()
                 .user(user)
                 .token(jwtToken)
-                .createdDate(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
                 .expired(false)
                 .revoked(false)
                 .build();

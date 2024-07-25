@@ -1,12 +1,14 @@
 package main.java.com.example.Pharmacy.Application.config.auth;
 
+import main.java.com.example.Pharmacy.Application.user.model.Role;
 import main.java.com.example.Pharmacy.Application.user.model.User;
 
 public record RegisterRequest(
         String firstname,
         String lastname,
         String email,
-        String password
+        String password,
+        Role role
 ) {
 
     public User toUser() {
@@ -15,6 +17,7 @@ public record RegisterRequest(
                 .lastname(lastname)
                 .email(email)
                 .password(password)
+                .role(role)
                 .build();
     }
 }
