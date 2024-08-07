@@ -167,9 +167,8 @@ public class AuthenticationService {
         return Locale.getDefault();
     }
 
-
     @Transactional
-    private void activateAccount(String token) throws MessagingException {
+    public AuthenticationResponse activateAccount(String token) throws MessagingException {
         Token savedToken = tokenRepository.findByToken(token)
                 .orElseThrow(() -> new RuntimeException("Invalid Token"));
 
@@ -185,6 +184,12 @@ public class AuthenticationService {
 
         savedToken.setValidatedAt(LocalDateTime.now());
         tokenRepository.save(savedToken);
+
+        String accessToken = jwtService.issueToken(user.getEmail());
+        String refreshToken = jwtService.issueRefreshToken(user.getEmail());
+        tokenService.saveUserToken(user, accessToken);
+
+        return new AuthenticationResponse(accessToken, refreshToken);
     }
 
     private String generateAndSaveActivationToken(User user) {

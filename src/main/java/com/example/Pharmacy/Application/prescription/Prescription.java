@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import main.java.com.example.Pharmacy.Application.product.Product;
 import main.java.com.example.Pharmacy.Application.user.model.Customer;
 
+import java.time.Instant;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,13 +20,23 @@ public class Prescription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     private Long prescriptionId;
+
     private String dosage;
     private String instructionsOfUse;
     private String usageDuration;
     private String prescriptionFileId; // Uploading the prescription
 
+    @Enumerated(EnumType.STRING)
+    private PrescriptionStatus status;
+
+    @Column(nullable = false, updatable = false)
+    private Instant dateCreated;
+
+    @Column(nullable = false)
+    private Instant dateUpdated;
+
     @ManyToOne
-    @JoinColumn(name = "customerId")
+    @JoinColumn(name = "customerId", nullable = false)
     private Customer customer;
 
 //    @ManyToMany
@@ -39,6 +51,17 @@ public class Prescription {
 //    )
 
     @ManyToOne
-    @JoinColumn(name = "productId")
+    @JoinColumn(name = "productId", nullable = false)
     private Product product;
+
+    @PrePersist
+    protected void onCreate() {
+        dateCreated = Instant.now();
+        dateUpdated = Instant.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        dateUpdated = Instant.now();
+    }
 }

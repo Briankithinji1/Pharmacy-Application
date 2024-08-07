@@ -13,7 +13,7 @@ spring:
     redis:
       time-to-live: 60000
   datasource:
-    url: jdbc:postgresql://localhost:5432/pharmacy_app
+    url: jdbc:postgresql://localhost:5702/pharmacy_app
     username: postgres
     password: password
     driver-class-name: org.postgresql.Driver
@@ -28,8 +28,8 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+      dialect: org.hibernate.dialect.PostgreSQLDialect
     database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
   servlet:
     multipart:
       max-file-size: 10MB

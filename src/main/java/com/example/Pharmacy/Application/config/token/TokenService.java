@@ -36,6 +36,4 @@ public class TokenService {
         });
         tokenRepository.saveAll(validUserTokens);
     }
-
-
 }

@@ -1,5 +1,6 @@
 package main.java.com.example.Pharmacy.Application.config.auth;
 
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,6 +33,16 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred during registration");
+        }
+    }
+
+    @GetMapping("/activate")
+    public ResponseEntity<?> activateAccount(@RequestParam("token") String token) {
+        try {
+            AuthenticationResponse response = authenticationService.activateAccount(token);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException | MessagingException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

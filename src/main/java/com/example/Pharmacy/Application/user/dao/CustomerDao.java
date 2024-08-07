@@ -10,16 +10,25 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CustomerDao {
+    // Basic CRUD operations
     List<Customer> getAllCustomers();
     Optional<Customer> getCustomerByUserId(Long userId);
     Optional<Customer> getCustomerByEmail(String email);
-    Optional<Customer> getByAssignedPharmacist(Pharmacist pharmacist);
-    Optional<Customer> getByAssignedVet(Veterinarian veterinarian);
-    Optional<Customer> getByOrderList_Status(OrderStatus status);
-    Optional<Customer> getByCartList_Status(CartStatus status);
+
+    // Assignments and Relationships
+    List<Customer> getByAssignedPharmacist(Pharmacist pharmacist);
+    List<Customer> getByAssignedVet(Veterinarian veterinarian);
+
+    // Order and Cart Status
+    List<Customer> getByOrderList_Status(OrderStatus status);
+    List<Customer> getByCartList_Status(CartStatus status);
+
+    // Inset, Update, Delete
     void insertCustomer(Customer customer);
     void updateCustomer(Customer customer);
     void deleteCustomer(Long userId);
+
+    // Existence checks
     boolean isCustomerExistsById(Long userId);
     boolean isCustomerExistsByEmail(String email);
     boolean isExistsByOrderList_Status(OrderStatus status);
