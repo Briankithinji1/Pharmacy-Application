@@ -10,7 +10,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,14 +20,14 @@ public class UserService {
 
     public void saveUser(UserDto userDto) {
         User user = convertToEntity(userDto);
-        user.setOnlineStatus(UserStatus.ONLINE);
+        user.setStatus(UserStatus.ONLINE);
         userRepository.save(user);
     }
 
     public void disconnect(String userId) {
         User storedUser = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
-        storedUser.setOnlineStatus(UserStatus.OFFLINE);
+        storedUser.setStatus(UserStatus.OFFLINE);
         userRepository.save(storedUser);
     }
 

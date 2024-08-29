@@ -6,7 +6,9 @@ import java.util.List;
 
 public record ConversationDto(
         String id,
-        List<String> participantIds,
+        String chatId,
+        String senderId,
+        String recipientId,
         Instant lastUpdated
 ) {
 }

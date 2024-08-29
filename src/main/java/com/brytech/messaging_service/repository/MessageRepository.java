@@ -12,7 +12,7 @@ public interface MessageRepository extends MongoRepository<Message, String> {
 
     List<Message> findByConversationIdOrderByTimestampAsc(String conversationId);
 
-    List<Message> findBySenderIdAndReceiverIdOrderByTimestampAsc(String senderId, String receiverId);
+    List<Message> findBySenderIdAndReceiverId(String senderId, String receiverId);
 
     List<Message> findBySenderId(String senderId);
 

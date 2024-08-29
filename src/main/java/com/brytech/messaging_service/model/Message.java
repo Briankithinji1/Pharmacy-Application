@@ -26,4 +26,6 @@ public class Message {
     private String content;
     private Instant timestamp;
     private MessageStatus status;
+    private boolean read;
+    private boolean deleted;
 }
