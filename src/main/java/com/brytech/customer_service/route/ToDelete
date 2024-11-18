@@ -1,0 +1,36 @@
+@Component
+public class OutboxEventRoute extends RouteBuilder {
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Override
+    public void configure() {
+        // Set up the Camel route to read from the Outbox table
+        from("sql:SELECT * FROM outbox_event WHERE processed = false?" +
+                "dataSource=#dataSource&delay=5000")  // Poll every 5 seconds
+            .routeId("outbox-event-route")
+            .process(exchange -> {
+                // Extract event data from SQL row
+                Map<String, Object> row = exchange.getIn().getBody(Map.class);
+                Long eventId = (Long) row.get("id");
+                String payload = (String) row.get("payload");
+
+                // Set headers for Kafka publishing
+                exchange.getIn().setHeader("KafkaTopic", "notification_events"); // Define topic
+                exchange.getIn().setHeader("EventId", eventId);
+                exchange.getIn().setBody(payload);
+            })
+            .to("kafka:{{kafka.topic.notification_events}}?brokers={{kafka.broker}}") // Kafka destination
+            .process(exchange -> {
+                // Mark event as processed in the Outbox table
+                Long eventId = exchange.getIn().getHeader("EventId", Long.class);
+                String updateSql = "UPDATE outbox_event SET processed = true WHERE id = :id";
+                Map<String, Object> params = new HashMap<>();
+                params.put("id", eventId);
+
+                JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+                jdbcTemplate.update(updateSql, params);
+            });
+    }
+}
