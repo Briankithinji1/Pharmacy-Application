@@ -4,6 +4,9 @@ import java.time.Instant;
 
 import com.brytech.prescription_service.enums.PrescriptionStatus;
 
+import lombok.Builder;
+
+@Builder(toBuilder = true)
 public record PrescriptionUploadDTO(
        Long id,
        String fileName,

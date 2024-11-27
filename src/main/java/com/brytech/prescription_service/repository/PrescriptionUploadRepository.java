@@ -13,8 +13,8 @@ import org.springframework.data.repository.query.Param;
 public interface PrescriptionUploadRepository extends JpaRepository<PrescriptionUpload, Long> {
 
     List<PrescriptionUpload> findByCustomerId(Long customerId);
-    List<PrescriptionUpload> findbyLinkedPrescriptionId(Long prescriptionId);
-    List<PrescriptionUpload> findbyStatus(String status);
+    List<PrescriptionUpload> findByLinkedPrescriptionId(Long prescriptionId);
+    List<PrescriptionUpload> findByStatus(String status);
 
     @Modifying
     @Query("UPDATE PrescriptionUpload pu SET pu.status = :status WHERE pu.id = :id")

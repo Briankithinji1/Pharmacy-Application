@@ -1,8 +1,8 @@
 package com.brytech.prescription_service.models;
 
-import java.util.UUID;
-
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import lombok.AllArgsConstructor;
@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 public class Customer {
 
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String first_name;
     private String last_name;

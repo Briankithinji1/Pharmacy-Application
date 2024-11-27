@@ -75,4 +75,33 @@ public class DefaultExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(UnsupportedFileException.class)
+    public ResponseEntity<ApiError> handleException(
+            UnsupportedFileException e,
+            HttpServletRequest request
+    ) {
+        ApiError apiError = new ApiError(
+                request.getRequestURI(), 
+                e.getMessage(), 
+                HttpStatus.BAD_REQUEST.value(), 
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FileUploadFailedException.class)
+    public ResponseEntity<ApiError> handelException(
+            FileUploadFailedException e,
+            HttpServletRequest request
+    ) {
+        ApiError apiError = new ApiError(
+                request.getRequestURI(), 
+                e.getMessage(), 
+                HttpStatus.INTERNAL_SERVER_ERROR.value(), 
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

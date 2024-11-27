@@ -1,7 +1,6 @@
 package com.brytech.prescription_service.events;
 
 import java.time.Instant;
-import java.util.UUID;
 
 import com.brytech.prescription_service.enums.EventType;
 import com.brytech.prescription_service.models.Outbox;
@@ -20,7 +19,7 @@ public class PrescriptionEventPublisher {
         this.eventService = new EventService();
     }
 
-    public void publishPrescriptionCreatedEvent(UUID prescriptionId, PrescriptionCreatedEvent event) {
+    public void publishPrescriptionCreatedEvent(Long prescriptionId, PrescriptionCreatedEvent event) {
         try {
             String payload = eventService.convertToJSON(event);
 
@@ -36,7 +35,7 @@ public class PrescriptionEventPublisher {
     }
 
 
-    public void publishPrescriptionUploadedEvent(UUID prescriptionUploadId, PrescriptionUploadedEvent event) {
+    public void publishPrescriptionUploadedEvent(Long prescriptionUploadId, PrescriptionUploadedEvent event) {
         try {
             String payload = eventService.convertToJSON(event);
 
@@ -52,7 +51,7 @@ public class PrescriptionEventPublisher {
     }
 
 
-    public void publishPrescriptionReviewedEvent(UUID prescriptionId, PrescriptionReviewedEvent event) {
+    public void publishPrescriptionReviewedEvent(Long prescriptionId, PrescriptionReviewedEvent event) {
         try {
             String payload = eventService.convertToJSON(event);
 
@@ -68,7 +67,7 @@ public class PrescriptionEventPublisher {
     }
 
 
-    public void publishPrescriptionUpdatedEvent(UUID prescriptionId, PrescriptionUpdatedEvent event) {
+    public void publishPrescriptionUpdatedEvent(Long prescriptionId, PrescriptionUpdatedEvent event) {
         try {
             String payload = eventService.convertToJSON(event);
 
@@ -85,7 +84,7 @@ public class PrescriptionEventPublisher {
     }
 
 
-    public void saveToOutbox(UUID aggregateId, String aggregateType, EventType eventType, String payload) {
+    public void saveToOutbox(Long aggregateId, String aggregateType, EventType eventType, String payload) {
         Outbox outbox = new Outbox();
         outbox.setAggragateId(aggregateId);
         outbox.setAggregateType(aggregateType);

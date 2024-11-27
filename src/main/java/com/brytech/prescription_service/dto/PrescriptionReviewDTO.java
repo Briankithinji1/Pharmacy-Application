@@ -9,6 +9,8 @@ public record PrescriptionReviewDTO(
        ReviewStatus reviewStatus,
        String comments,
        Instant reviewedAt,
+       Instant updatedAt,
+       Long pharmacistId,
        PrescriptionUploadDTO prescriptionUpload
         ) {
 }

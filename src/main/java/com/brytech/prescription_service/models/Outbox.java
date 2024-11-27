@@ -1,7 +1,6 @@
 package com.brytech.prescription_service.models;
 
 import java.time.Instant;
-import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +23,7 @@ public class Outbox {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private UUID aggragateId;
+    private Long aggragateId;
     private String aggregateType;
     private EventType eventType;
     private String payload;
