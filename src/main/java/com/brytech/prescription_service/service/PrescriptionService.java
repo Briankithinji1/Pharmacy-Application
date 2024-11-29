@@ -18,6 +18,9 @@ import com.brytech.prescription_service.models.PrescriptionReview;
 import com.brytech.prescription_service.models.PrescriptionUpload;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -52,6 +55,39 @@ public class PrescriptionService {
         return convertToDto(savedPrescription);
     }
 
+    public PrescriptionDto findPrescriptionById(Long id) {
+        return uploadDao.findById(id)
+            .map(this::convertToDto)
+            .orElseThrow(() -> new ResourceNotFoundException(
+                        "Prescription with ID [%s] not found".formatted(id)
+            ));
+    }
+
+    public Page<PrescriptionDto> findPrescriptionByStatus(String status, Pageable pageable) {
+        return uploadDao.findByStatus(status, pageable)
+            .map(this::convertToDto);
+    }
+
+    public Page<PrescriptionDto> findPrescriptionByPatientId(Long customerId, Pageable pageable) {
+        if (!uploadDao.isPrescriptionExistsByCustomerId(customerId)) {
+            throw new ResourceNotFoundException(
+                    "Prescription for patient with ID [%s] not found".formatted(customerId)
+            );
+        }
+
+        return uploadDao.findByCustomerId(customerId)
+            .map(this::convertToDto);
+    }
+
+    public void deleteById(Long id) {
+        try {
+            uploadDao.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(
+                    "Prescription with ID [%s] not found".formatted(id)
+            );
+        }
+    }
 
     // TODO: Remove this method and publish event in the save method(PrescriptionUploadService)
     //

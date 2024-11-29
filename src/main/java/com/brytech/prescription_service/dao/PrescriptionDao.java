@@ -15,4 +15,8 @@ public interface PrescriptionDao {
     Page<Prescription> findByCustomerId(Long customerId, Pageable pageable);
     Prescription update(Prescription prescription);
     void deleteById(Long id);
+
+    // Existence checks
+    boolean isPrescriptionExistById(Long prescriptionId);
+    boolean isPrescriptionExistByCustomerId(Long customerId);
 }
