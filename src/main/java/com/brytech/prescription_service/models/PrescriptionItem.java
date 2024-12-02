@@ -1,9 +1,6 @@
 package com.brytech.prescription_service.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +17,12 @@ public class PrescriptionItem {
     private Long id;
 
     private String medicineName;
-    private String dosage;
-    private int quantity;
-    private String dosageInstructions;
+    private String dosage; // e.g., "500mg"
+    private String frequency; // e.g., "3 times a day"
+    private String instructions; // e.g., "Take after meals"
+    private int quantity; // e.g., 30 pills
+
+    @ManyToOne
+    @JoinColumn(name = "prescription_id")
+    private Prescription prescription;
 }

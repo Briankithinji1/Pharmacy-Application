@@ -2,11 +2,7 @@ package com.brytech.prescription_service.models;
 
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +22,6 @@ public class Pharmacist {
     private String licenseNumber;
     private String speciality;
 
-    @OneToMany(mappedBy = "pharmacist")
+    @OneToMany(mappedBy = "pharmacist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Prescription> prescriptions;
 }

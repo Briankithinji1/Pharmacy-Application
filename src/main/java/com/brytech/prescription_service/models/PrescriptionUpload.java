@@ -1,13 +1,10 @@
 package com.brytech.prescription_service.models;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 import com.brytech.prescription_service.enums.PrescriptionStatus;
 
@@ -29,6 +26,7 @@ public class PrescriptionUpload {
     private String fileType;
     private String fileUrl;
 
+    @Enumerated(EnumType.STRING)
     private PrescriptionStatus status;
     private Instant uploadDate;
 
@@ -37,4 +35,7 @@ public class PrescriptionUpload {
 
     @OneToOne
     private Prescription linkedPrescription;
+
+    @OneToMany(mappedBy = "prescriptionUpload", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PrescriptionReview> reviews = new ArrayList<>();
 }

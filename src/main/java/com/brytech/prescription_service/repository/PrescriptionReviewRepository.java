@@ -12,8 +12,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface PrescriptionReviewRepository extends JpaRepository<PrescriptionReview, Long> {
 
-    @Query("SELECT pr FROM PrescriptionReview pr WHERE pr.prescription.id = :prescriptionId")
-    List<PrescriptionReview> findByPrescriptionId(@Param("prescriptionId") Long prescriptionId);
+    @Query("SELECT pr FROM PrescriptionReview pr WHERE pr.prescriptionUpload.id = :uploadId")
+    List<PrescriptionReview> findByPrescriptionUploadId(@Param("uploadId") Long uploadId);
 
     @Query("SELECT pr FROM PrescriptionReview pr WHERE pr.reviewer.id = :pharmacistId")
     List<PrescriptionReview> findByReviewerId(@Param("pharmacistId") Long pharmacistId);

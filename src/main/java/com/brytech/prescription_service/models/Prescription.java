@@ -3,12 +3,7 @@ package com.brytech.prescription_service.models;
 import java.time.Instant;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import com.brytech.prescription_service.enums.PrescriptionStatus;
 
@@ -38,5 +33,8 @@ public class Prescription {
 
     @OneToMany(mappedBy = "prescription")
     private List<PrescriptionItem> items;
-    
+
+    @ManyToOne
+    @JoinColumn(name = "pharmacist_id")
+    private Pharmacist pharmacist;
 }

@@ -18,11 +18,11 @@ public class PrescriptionReviewJpaDataAccessService implements PrescriptionRevie
     }
 
     @Override
-    public List<PrescriptionReview> findByPrescriptionId(Long prescriptionId) {
-        if (prescriptionId == null) {
+    public List<PrescriptionReview> findByPrescriptionUploadId(Long uploadId) {
+        if (uploadId == null) {
             throw new IllegalArgumentException("Prescription ID must not be null");
         }
-        return repository.findByPrescriptionId(prescriptionId);
+        return repository.findByPrescriptionUploadId(uploadId);
     }
 
     @Override

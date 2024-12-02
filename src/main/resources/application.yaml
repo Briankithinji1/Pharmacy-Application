@@ -15,9 +15,9 @@ spring:
     port: 6379
 
   datasource:
-    url: jdbc:postgresql://localhost:5402/mydb
-    username: root
-    password: secret
+    url: jdbc:postgresql://localhost:5502/prescription
+    username: brytech
+    password: password
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -33,6 +33,16 @@ spring:
             non_contextual_creation: true
       dialect: org.hibernate.dialect.PostgreSQLDialect
     database: postgresql
+
+  cloud:
+    azure:
+      storage:
+        account-name: ${AZURE_STORAGE_ACCOUNT_NAME:YOUR_ACCOUNT_NAME} # environment variable with a default value
+        account-key: ${AZURE_STORAGE_ACCOUNT_KEY:YOUR_ACCOUNT_KEY} # environment variable with a default value
+    servlet:
+      multipart:
+        max-file-size: 2MB
+        max-request-size: 20MB
 
   kafka:
     bootstrap-servers: localhost:9092

@@ -2,14 +2,7 @@ package com.brytech.prescription_service.models;
 
 import java.time.Instant;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
+import jakarta.persistence.*;
 
 import com.brytech.prescription_service.enums.ReviewStatus;
 
@@ -35,6 +28,7 @@ public class PrescriptionReview {
     private Instant updatedAt;
 
     @ManyToOne
+    @JoinColumn(name = "prescription_upload_id", nullable = false)
     private PrescriptionUpload prescriptionUpload;
 
     @ManyToOne(optional = false)

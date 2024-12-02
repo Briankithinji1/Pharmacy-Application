@@ -1,5 +1,6 @@
 package com.brytech.prescription_service.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.brytech.prescription_service.models.Prescription;
@@ -16,6 +17,11 @@ public class PrescriptionJpaDataAccessService implements PrescriptionDao {
 
     public PrescriptionJpaDataAccessService(PrescriptionRepository repository) {
         this.repository = repository;
+    }
+
+    @Override
+    public Page<Prescription> selectAllPrescriptions(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     @Override

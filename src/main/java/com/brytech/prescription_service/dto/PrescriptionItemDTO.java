@@ -4,7 +4,9 @@ public record PrescriptionItemDTO(
         Long id,
         String medicineName,
         String dosage,
+        String frequency,
+        String instructions,
         int quantity,
-        String dosageInstructions
+        PrescriptionDto prescription
         ) {
 }
