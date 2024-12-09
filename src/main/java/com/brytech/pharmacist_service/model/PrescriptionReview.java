@@ -1,13 +1,22 @@
 package com.brytech.pharmacist_service.model;
 
+import java.time.Instant;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 import com.brytech.pharmacist_service.enumeration.ReviewStatus;
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -34,5 +43,5 @@ public class PrescriptionReview {
     private ReviewStatus reviewStatus; // APPROVED, REJECTED, PENDING
 
     @Column(nullable = false)
-    private LocalDateTime reviewedAt;
+    private Instant reviewedAt;
 }

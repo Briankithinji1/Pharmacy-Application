@@ -18,4 +18,6 @@ public interface PrescriptionReviewDao {
     List<PrescriptionReview> findByPharmacistId(Long pharmacistId);
     Optional<PrescriptionReview> findByPrescriptionId(Long prescriptionId);
     void deleteById(Long id);
+
+    boolean isPrescriptionReviewExistByPrescriptionId(Long prescriptionId);
 }

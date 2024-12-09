@@ -54,4 +54,9 @@ public class PrescriptionReviewJpaDataAccessService implements PrescriptionRevie
     public void deleteById(Long id) {
         reviewRepository.deleteById(id);
     }
+
+    @Override
+    public boolean isPrescriptionReviewExistByPrescriptionId(Long prescriptionId) {
+        return reviewRepository.isPrescriptionReviewExistByPrescriptionId(prescriptionId);
+    }
 }

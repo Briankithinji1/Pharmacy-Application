@@ -1,14 +1,14 @@
 package com.brytech.pharmacist_service.dto;
 
-import com.brytech.pharmacist_service.enumeration.ReviewStatus;
+import java.time.Instant;
 
-import java.time.LocalDateTime;
+import com.brytech.pharmacist_service.enumeration.ReviewStatus;
 
 public record PrescriptionReviewDto(
         Long reviewId,
         Long prescriptionId,
         ReviewStatus status,
         String notes,
-        LocalDateTime reviewedAt
+        Instant reviewedAt
 ) {
 }

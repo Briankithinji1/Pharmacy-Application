@@ -1,39 +1,56 @@
 package com.brytech.pharmacist_service.route;
 
-import javax.sql.DataSource;
-
+import com.brytech.pharmacist_service.event.EventHandlerService;
 import com.brytech.pharmacist_service.event.consumed_events.PrescriptionCreatedEvent;
 import com.brytech.pharmacist_service.exception.RequestValidationException;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class EventConsumerRoute extends RouteBuilder {
 
-    @Autowired
-    private DataSource dataSource;
+    private final EventHandlerService eventHandlerService;
+
+    @Value("${kafka.topic.prescription-created}")
+    private String prescriptionCreatedTopic;
+
+    @Value("${kafka.topic.prescription-reviewed}")
+    private String prescriptionReviewedTopic;
 
     @Override
     public void configure() throws Exception {
-        from("kafka:prescriptionCreatedTopic")
+        onException(RequestValidationException.class)
+            .log(LoggingLevel.WARN, "Validation failed for event: ${exception.message}")
+            .handled(true)
+            .to("kafka:deadLetterTopic");
+
+        onException(Exception.class)
+            .log(LoggingLevel.ERROR, "Unexpected error: ${exception.message}")
+            .process(exchange -> {
+                Exception exception = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Exception.class);
+                exchange.getIn().setHeader("errorDetails", exception.getMessage());
+            })
+            .to("kafka:deadLetterTopic")
+            .handled(true);
+
+        from("kafka:" + prescriptionCreatedTopic)
             .unmarshal().json(JsonLibrary.Jackson, PrescriptionCreatedEvent.class)
             .routeId("prescription-created-consumer")
-            .process(exchange -> {
-                PrescriptionCreatedEvent event = exchange.getIn().getBody(PrescriptionCreatedEvent.class);
+            .process(exchange -> eventHandlerService.processPrescriptionCreatedEvent(exchange))
+            .log("Successfully processed PrescriptionCreatedEvent with ID: ${body.prescriptionId}")
+            .to("log:prescriptionCreatedEventProcessed?level=INFO");
 
-                // Validate event
-                if (event.prescriptionId() == null || event.customerId() == null) {
-                    throw new RequestValidationException("Invalid PrescriptionCreatedEvent recieved");
-                }
-
-                // Process event
-                // reviewPrescription(event);
-            })
-        .to("log:prescriptionCreatedEventProcessed?level=INFO");
+        // InventoryUpdatedEvent
+        // OrderPlacedEvent
+        // CustomerProfileUpdatedEvent
     }
-
-    
 }
+

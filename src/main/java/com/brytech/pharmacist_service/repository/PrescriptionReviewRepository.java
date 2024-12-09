@@ -16,4 +16,6 @@ public interface PrescriptionReviewRepository extends JpaRepository<Prescription
     Page<PrescriptionReview> findByStatus(ReviewStatus status, Pageable pageable);
     Optional<PrescriptionReview> findByPrescriptionId(Long prescriptionId);
     List<PrescriptionReview> findByPharmacistId(Long pharmacistId);
+
+    boolean isPrescriptionReviewExistByPrescriptionId(Long prescriptionId);
 }

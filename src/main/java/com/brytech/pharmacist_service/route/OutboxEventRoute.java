@@ -2,21 +2,14 @@ package com.brytech.pharmacist_service.route;
 
 import java.time.Instant;
 
-import javax.sql.DataSource;
-
 import com.brytech.pharmacist_service.model.Outbox;
 
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OutboxEventRoute extends RouteBuilder {
-
-    @Autowired
-    private DataSource dataSource;
-
 
     @Override
     public void configure() throws Exception {
