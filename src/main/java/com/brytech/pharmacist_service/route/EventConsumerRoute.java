@@ -41,6 +41,7 @@ public class EventConsumerRoute extends RouteBuilder {
             .to("kafka:deadLetterTopic")
             .handled(true);
 
+        // PrescriptionCreatedEvent - from PrescriptionService
         from("kafka:" + prescriptionCreatedTopic)
             .unmarshal().json(JsonLibrary.Jackson, PrescriptionCreatedEvent.class)
             .routeId("prescription-created-consumer")
@@ -48,9 +49,12 @@ public class EventConsumerRoute extends RouteBuilder {
             .log("Successfully processed PrescriptionCreatedEvent with ID: ${body.prescriptionId}")
             .to("log:prescriptionCreatedEventProcessed?level=INFO");
 
-        // InventoryUpdatedEvent
-        // OrderPlacedEvent
-        // CustomerProfileUpdatedEvent
+        // InventoryUpdatedEvent/ StockUpdatedEvent - from InventoryService
+        // LowStockAlerEvent/ DrugShortageEvent - from InventoryService
+        // OrderPlacedEvent - from OrderService
+        // OrderCanceledEvent - from OrderService
+        // MessageReceivedEvent - from MessagingService
+        // CustomerProfileUpdatedEvent - from CustomerService
     }
 }
 

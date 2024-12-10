@@ -6,5 +6,10 @@ public record PrescriptionErrorEvent(
         Long prescriptionId,
         String errorMessage,
         Instant errorOccuredAt
-        ) {
+) implements AggregateEvent {
+
+    @Override
+    public Long getAggregateId() {
+        return prescriptionId;
+    }
 }

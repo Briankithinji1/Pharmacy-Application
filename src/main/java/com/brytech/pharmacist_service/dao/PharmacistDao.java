@@ -13,6 +13,7 @@ public interface PharmacistDao {
     List<Pharmacist> findByBranchId(Long branchId);
     Optional<Pharmacist> findByEmail(String email);
     Optional<Pharmacist> findByPhoneNumber(String phoneNumber);
+    Optional<Pharmacist> findByEmailOrPhoneNumber(String email, String phoneNumber);
     void deleteById(Long id);
     void delete(Pharmacist pharmacist);
 }

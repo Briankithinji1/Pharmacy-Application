@@ -12,4 +12,6 @@ public interface PharmacistRepository extends JpaRepository<Pharmacist, Long> {
     List<Pharmacist> findByBranchId(Long branchId);
     Optional<Pharmacist> findByEmail(String Email);
     Optional<Pharmacist> findByPhoneNumber(String phoneNumber);
+
+    Optional<Pharmacist> findByEmailOrPhoneNumber(String email, String phoneNumber);
 }

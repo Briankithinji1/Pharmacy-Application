@@ -9,5 +9,10 @@ public record PrescriptionDispensedEvent(
         Long pharmacistId,
         PrescriptionItemDto items,
         Instant dispensedAt
-        ) {
+) implements AggregateEvent {
+
+    @Override
+    public Long getAggregateId() {
+        return prescriptionId;
+    }
 }

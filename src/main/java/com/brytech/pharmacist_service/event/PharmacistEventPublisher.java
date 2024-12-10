@@ -19,99 +19,56 @@ public class PharmacistEventPublisher {
         this.eventService = eventService;
     }
   
-    public void publishPrescriptionReviewedEvent(Long reviewId, PrescriptionReviewedEvent event) {
+    public void publishPrescriptionReviewedEvent(PrescriptionReviewedEvent event) {
+        publishEvent(event, "Prescription_Review", EventType.PRESCRIPTION_REVIEW_COMPLETED);
+    }
+
+    public void publishPrescriptionDispensedEvent(PrescriptionDispensedEvent event) {
+        publishEvent(event, "Prescription", EventType.PRESCRIPTION_DISPENSED);
+    }
+
+    public void publishPrescriptionReadyForPickupEvent(PrescriptionReadyForPickupEvent event) {
+        publishEvent(event, "Prescription", EventType.PRESCRIPTION_READY_FOR_PICKUP);
+    }
+
+    public void publishPrescriptionRejectedEvent(PrescriptionRejectedEvent event) {
+        publishEvent( event, "Prescription", EventType.PRESCRIPTION_REJECTED);
+    }
+
+    public void publishPrescriptionErrorEvent(PrescriptionErrorEvent event) {
+        publishEvent(event, "Prescription", EventType.PRESCRIPTION_ERROR);
+    }
+
+    public void publishDrugShortageEvent(DrugShortageEvent event) {    
+        publishEvent(event, "Inventory", EventType.DRUG_SHORTAGE);
+    }
+
+    public void publishStockDispensedEvent(StockDispensedEvent event) {
+        publishEvent(event, "Inventory", EventType.INVENTORY_DISPENSED);
+    }
+
+    public void publishLowStockAlertEvent(LowStockAlertEvent event) {
+        publishEvent(event, "Inventory", EventType.LOW_STOCK_ALERT);
+    }
+
+    private void publishEvent(Object event, String aggregateType, EventType eventType) {
         try {
             String payload = eventService.convertToJSON(event);
-
-            saveToOutbox(
-                    reviewId, 
-                    "Prescrition_review", 
-                    EventType.PRESCRIPTION_REVIEW_COMPLETED, 
-                    payload
-            );
+            saveToOutbox(event, aggregateType, eventType, payload);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to serialize PrescriptionReviewedEvent", e);
+            throw new RuntimeException("Failed to serialize event of type: " + eventType, e);
         }
     }
 
-    public void publishPrescriptionDispensedEvent(Long prescriptionId, PrescriptionDispensedEvent event) {
-        try {
-            String payload = eventService.convertToJSON(event);
-
-            saveToOutbox(
-                    prescriptionId, 
-                    "Prescription", 
-                    EventType.PRESCRIPTION_DISPENSED, 
-                    payload
-            );
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to serialize PrescriptionDispensedEvent", e);
+    public void saveToOutbox(Object event, String aggregateType, EventType eventType, String payload) {
+        if (!(event instanceof AggregateEvent aggregateEvent)) {
+            throw new IllegalArgumentException(
+                    "Event does not implement AggregateEvent: " + event.getClass().getName()
+                    );
         }
-    }
 
-    public void publishInventoryEvent(Long inventoryId, InventoryUpdatedEvent event) {
-        try {
-            String payload = eventService.convertToJSON(event);
-
-            saveToOutbox(
-                    inventoryId, 
-                    "Inventory", 
-                    EventType.INVENTORY_UPDATED, 
-                    payload
-            );
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to serialize InventoryUpdatedEvent", e);
-        }
-    }
-
-    public void publishPrescriptionReadyForPickupEvent(Long prescriptionId, PrescriptionReadyForPickupEvent event) {
-        try {
-            String payload = eventService.convertToJSON(event);
-
-            saveToOutbox(
-                    prescriptionId, 
-                    "Prescription", 
-                    EventType.PRESCRIPTION_READY_FOR_PICKUP, 
-                    payload
-            );
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to serialize PrescriptionReadyForPickupEvent", e);
-        }
-    }
-
-    public void publishPrescriptionErrorEvent(Long prescriptionId, PrescriptionErrorEvent event) {
-        try {
-            String payload = eventService.convertToJSON(event);
-
-            saveToOutbox(
-                    prescriptionId, 
-                    "Prescription", 
-                    EventType.PRESCRIPTION_ERROR, 
-                    payload
-            );
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to serialize PrescriptionErrorEvent", e);
-        }
-    }
-
-    public void publishDrugShortageEvent(Long prescriptionId, DrugShortageEvent event) {
-        try {
-            String payload = eventService.convertToJSON(event);
-
-            saveToOutbox(
-                    prescriptionId, 
-                    "Inventory", 
-                    EventType.DRUG_SHORTAGE, 
-                    payload
-            );
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to serialize DrugShortageEvent", e);
-        }
-    }
-
-    public void saveToOutbox(Long aggregateId, String aggregateType, EventType eventType, String payload) {
         Outbox outbox = new Outbox();
-        outbox.setAggregateId(aggregateId);
+        outbox.setAggregateId(getAggregateId((AggregateEvent) event));
         outbox.setAggregateType(aggregateType);
         outbox.setEventType(eventType);
         outbox.setPayload(payload);
@@ -120,5 +77,9 @@ public class PharmacistEventPublisher {
         outbox.setStatus("Pending");
 
         outboxRepository.save(outbox);
+    }
+
+    private Long getAggregateId(AggregateEvent event) {
+        return event.getAggregateId();
     }
 }

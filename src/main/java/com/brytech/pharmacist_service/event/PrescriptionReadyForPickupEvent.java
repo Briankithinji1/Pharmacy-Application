@@ -6,5 +6,10 @@ public record PrescriptionReadyForPickupEvent(
         Long prescriptionId,
         Long pharmacistId,
         Instant readyAt
-        ) {
+) implements AggregateEvent {
+
+    @Override
+    public Long getAggregateId() {
+        return prescriptionId;
+    }
 }

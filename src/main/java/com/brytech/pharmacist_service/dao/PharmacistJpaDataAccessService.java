@@ -58,5 +58,10 @@ public class PharmacistJpaDataAccessService implements PharmacistDao {
         pharmacistRepository.delete(pharmacist);
     }
 
+    @Override
+    public Optional<Pharmacist> findByEmailOrPhoneNumber(String email, String phoneNumber) {
+        return pharmacistRepository.findByEmailOrPhoneNumber(email, phoneNumber);
+    }
+
     
 }

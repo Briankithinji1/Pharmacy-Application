@@ -1,13 +1,10 @@
 package com.brytech.pharmacist_service.event;
 
-import java.time.Instant;
-
-public record DrugShortageEvent(
+public record LowStockAlertEvent(
         Long productId,
-        String drugName,
-        Long branchId,
-        Integer quantityShortage,
-        Instant shortageDetectedAt
+        String productName,
+        int remainingStock,
+        int lowStockThreshold
 ) implements AggregateEvent {
 
     @Override

@@ -1,15 +1,12 @@
 package com.brytech.pharmacist_service.event;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
-import com.brytech.pharmacist_service.enumeration.ReviewStatus;
-
-public record PrescriptionReviewedEvent(
+public record PrescriptionRejectedEvent(
         Long prescriptionId,
         Long pharmacistId,
-        ReviewStatus status,
-        String notes,
-        LocalDateTime reviewedAt
+        String reason, // Reason for rejection
+        Instant rejectedAt
 ) implements AggregateEvent {
 
     @Override
