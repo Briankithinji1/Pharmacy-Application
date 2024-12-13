@@ -38,5 +38,5 @@ public class PaymentDetails {
     private PaymentStatus paymentStatus;
 
     @Column(nullable = false)
-    private LocalDateTime paymentDate;
+    private LocalDateTime processedAt;
 }

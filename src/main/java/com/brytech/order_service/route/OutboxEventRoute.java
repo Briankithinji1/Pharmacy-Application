@@ -1,11 +1,12 @@
 package com.brytech.order_service.route;
 
+import java.time.Instant;
+
 import com.brytech.order_service.model.Outbox;
+
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
-
-import java.time.Instant;
 
 @Component
 public class OutboxEventRoute extends RouteBuilder {
@@ -31,7 +32,7 @@ public class OutboxEventRoute extends RouteBuilder {
             .useOriginalMessage()
             .logStackTrace(true)
             .handled(true)
-            .to("log:com.brytech.pharmacist_service.route.OutboxEventRoute?level=ERROR&showException=true")
+            .to("log:com.brytech.order_service.route.OutboxEventRoute?level=ERROR&showException=true")
             .process(exchange -> {
                 Outbox outbox = exchange.getIn().getBody(Outbox.class);
                 if (outbox != null) {

@@ -17,9 +17,11 @@ public interface OrderDao {
     Optional<Order> findById(Long id);
     Optional<Order> findByOrderReference(String orderReference);
     List<Order> findOrdersByCustomerId(Long customerId);
-    List<Order> findbyOrderStatus(OrderStatus orderStatus);
+    List<Order> findByOrderStatus(OrderStatus orderStatus);
     List<Order> findByPaymentStatus(PaymentStatus paymentStatus);
     void deleteOrder(Long id);
     boolean existById(Long id);
     long countOrders();
+
+    List<Order> findPendingOrdersByProductId(Long productId, OrderStatus status);
 }

@@ -47,7 +47,7 @@ public class OrderJpaDataAccessService implements OrderDao {
     }
 
     @Override
-    public List<Order> findbyOrderStatus(OrderStatus orderStatus) {
+    public List<Order> findByOrderStatus(OrderStatus orderStatus) {
         return orderRepository.findByOrderStatus(orderStatus);
     }
 
@@ -69,5 +69,10 @@ public class OrderJpaDataAccessService implements OrderDao {
     @Override
     public long countOrders() {
         return orderRepository.count();
-    }    
+    }
+
+    @Override
+    public List<Order> findPendingOrdersByProductId(Long productId, OrderStatus status) {
+        return orderRepository.findPendingOrdersByProductId(productId, status);
+    }
 }

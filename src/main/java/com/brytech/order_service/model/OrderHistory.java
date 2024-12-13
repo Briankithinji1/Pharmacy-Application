@@ -41,4 +41,10 @@ public class OrderHistory {
 
     @Column
     private String updatedBy;
+
+    public OrderHistory(Order order, OrderStatus status, LocalDateTime updatedAt) {
+        this.order = order;
+        this.status = status;
+        this.updatedAt = updatedAt;
+    }
 }

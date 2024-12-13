@@ -3,7 +3,7 @@ package com.brytech.order_service.enumeration;
 public enum OrderStatus {
     PENDING("PENDING"),
     ACCEPTED("ACCEPTED"),
-    PENDING_PAYMENT("PENDING_PAYMENT"),
+    PENDING_PAYMENT("Pending Payment"),
     PAID("PAID"),
     PROCESSING("Processing"),
     SHIPPED("Shipped"),
@@ -11,6 +11,9 @@ public enum OrderStatus {
     REFUND("REFUND"),
     CANCELLED("CANCELLED"),
     RETURNED("Returned"),
+    PRESCRIPTION_VALIDATED("Prescription Validated"),
+    DELIVERY_SCHEDULED("Delivery Scheduled"),
+    AWAITING_PRESCRIPTION_VALIDATION("Awaiting Prescription Validation"),
 
     REJECT("REJECT");
 

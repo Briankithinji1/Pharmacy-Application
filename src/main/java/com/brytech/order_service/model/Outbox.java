@@ -7,7 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import com.brytech.order_service.dto.EventType;
+import com.brytech.order_service.enumeration.EventType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

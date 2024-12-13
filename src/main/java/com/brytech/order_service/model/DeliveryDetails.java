@@ -38,6 +38,9 @@ public class DeliveryDetails {
     @Column
     private LocalDateTime deliveredAt;
 
+    @Column
+    private String trackingNumber;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private DeliveryStatus status;
