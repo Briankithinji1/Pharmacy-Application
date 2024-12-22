@@ -1,0 +1,11 @@
+package com.brytech.product_service.enumeration;
+
+public enum EventType {
+    PRODUCT_CREATED,
+    PRODUCT_UPDATED,
+    PRODUCT_DELETED,
+    PRODUCT_AVAILABILITY_CHANGED,
+    PRODUCT_CATEGORY_ADDED,
+    PRODUCT_CATEGORY_REMOVED,
+    PRODUCT_PRICE_CHANGED
+}
