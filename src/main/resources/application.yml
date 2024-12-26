@@ -1,0 +1,82 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /cart/api/v1
+  error:
+    include-message: always
+
+spring:
+  cache:
+    type: redis
+    cache-names:
+      - products
+      - categories
+    redis:
+      time-to-live: 60s
+  redis:
+    host: localhost
+    port: 6379
+  lettuce:
+    pool:
+      max-active: 8
+      max-idle: 8
+      min-idle: 2
+
+  datasource:
+    url: jdbc:postgresql://localhost:5802/cart_db
+    username: brytech
+    password: password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      max-lifetime: 1800000
+
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+  camel.component.kafka.configuration:
+    key.serializer: org.apache.kafka.common.serialization.StringSerializer
+    value.serializer: org.apache.kafka.common.serialization.StringSerializer
+    key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+kafka:
+  topic:
+    product-created: product.created
+    product-updated: product.updated
+    product-deleted: product.deleted
+      
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.hibernate: DEBUG
+    org.springframework.data.jpa: DEBUG
+
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+cors:
+  allowed-origins: "*"
+  allowed-methods: "*"
+  allowed-headers: "*"
+  exposed-headers: "*"
