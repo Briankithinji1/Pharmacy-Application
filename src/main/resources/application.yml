@@ -49,6 +49,13 @@ logging:
     org.hibernate: DEBUG
     org.springframework.data.jpa: DEBUG
 
+kafka:
+  topic:
+    payment-processed: payment.processed
+    delivery-scheduled: delivery.scheduled
+    prescription-validated: prescription.validated
+    delivery-completed: delivery.completed
+    inventory-updated: inventory.updated
 
 springdoc:
   api-docs:

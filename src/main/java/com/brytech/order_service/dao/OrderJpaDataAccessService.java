@@ -27,6 +27,11 @@ public class OrderJpaDataAccessService implements OrderDao {
     }
 
     @Override
+    public void saveAllOrders(List<Order> order) {
+        orderRepository.saveAll(order);
+    }
+
+    @Override
     public Page<Order> findAllOrders(Pageable pageable) {
         return orderRepository.findAll(pageable);
     }
@@ -67,12 +72,17 @@ public class OrderJpaDataAccessService implements OrderDao {
     }
 
     @Override
+    public boolean existsByOrderReference(String orderReference) {
+        return orderRepository.existsByOrderReference(orderReference);
+    }
+
+    @Override
     public long countOrders() {
         return orderRepository.count();
     }
 
     @Override
-    public List<Order> findPendingOrdersByProductId(Long productId, OrderStatus status) {
-        return orderRepository.findPendingOrdersByProductId(productId, status);
+    public Page<Order> findPendingOrdersByProductId(Long productId, OrderStatus status, Pageable pageable) {
+        return orderRepository.findPendingOrdersByProductId(productId, status, pageable);
     }
 }

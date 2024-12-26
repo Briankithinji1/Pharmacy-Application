@@ -55,8 +55,8 @@ public class OrderItemJpaDataAccessService implements OrderItemDao {
     }
 
     @Override
-    public void saveAll(List<OrderItem> items) {
-        orderItemRepository.saveAll(items);
+    public List<OrderItem> saveAll(List<OrderItem> items) {
+        return orderItemRepository.saveAll(items);
     }
 
     @Override

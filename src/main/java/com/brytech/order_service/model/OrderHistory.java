@@ -47,4 +47,9 @@ public class OrderHistory {
         this.status = status;
         this.updatedAt = updatedAt;
     }
+
+    public OrderHistory(OrderStatus status, LocalDateTime updatedAt) {
+        this.status = status;
+        this.updatedAt = updatedAt;
+    }
 }

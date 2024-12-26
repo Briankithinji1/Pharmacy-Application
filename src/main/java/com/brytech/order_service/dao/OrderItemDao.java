@@ -17,6 +17,6 @@ public interface OrderItemDao {
     List<OrderItem> findByProductName(String productName);
     List<OrderItem> findByOrderIdAndProductId(Long orderId, Long productId);
     Page<OrderItem> findAll(Pageable pageable);
-    void saveAll(List<OrderItem> items);
+    List<OrderItem> saveAll(List<OrderItem> items);
     void deleteItem(Long id);
 }

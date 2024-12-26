@@ -1,22 +1,23 @@
 package com.brytech.order_service.event.incoming;
 
+import java.time.LocalDateTime;
+
 import com.brytech.order_service.dao.OrderDao;
 import com.brytech.order_service.enumeration.OrderStatus;
 import com.brytech.order_service.exception.RequestValidationException;
 import com.brytech.order_service.exception.ResourceNotFoundException;
 import com.brytech.order_service.model.DeliveryDetails;
 import com.brytech.order_service.model.Order;
-
 import com.brytech.order_service.model.OrderHistory;
 import com.brytech.order_service.model.PaymentDetails;
 import com.brytech.order_service.service.PrescriptionService;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -51,6 +52,8 @@ public class EventHandlerService {
         // Send notifications (notificationService.sendOrderConfirmationEmail(order));
     }
 
+    // TODO: RECEIVE PRESCRIPTION VERIFIED EVENT AND CREATE AN ORDER BASED ON THE MEDICATION/ITEM LIST
+
     public void handlePrescriptionValidatedEvent(PrescriptionValidatedEvent event) {
         Order order = orderDao.findById(event.orderId())
             .orElseThrow(() -> new ResourceNotFoundException(
@@ -82,24 +85,30 @@ public class EventHandlerService {
     } 
 
     public void handleInventoryUpdatedEvent(InventoryUpdatedEvent event) {
-        // Log or process the inventory update if it affects current orders
-        List<Order> affectedOrders = orderDao.findPendingOrdersByProductId(event.productId(), OrderStatus.PENDING);
 
-        for (Order order : affectedOrders) {
-            boolean insufficientStock = order.getItems().stream()
-                    .anyMatch(item -> item.getProductId().equals(event.productId())
-                            && item.getQuantity() > event.quantityAvailable());
+        Pageable pageable = PageRequest.of(0, 100);
+        Page<Order> affectedOrders;
 
-            if (insufficientStock) {
-                order.setStatus(OrderStatus.PENDING);
-                order.getOrderHistory().add(new OrderHistory(order, OrderStatus.PENDING, LocalDateTime.now()));
-                order.setUpdatedAt(LocalDateTime.now());
-                orderDao.saveOrder(order);
+        do {
+            affectedOrders = orderDao.findPendingOrdersByProductId(event.productId(), OrderStatus.PENDING, pageable);
 
-//                notificationService.notifyCustomer(order.getCustomerId(),
-//                        "Your order is on hold due to insufficient stock for one or more items.");
+            affectedOrders.stream()
+                    .filter(order -> order.getItems().stream()
+                            .anyMatch(orderItem -> orderItem.getProductId().equals(event.productId())
+                                    && orderItem.getQuantity() > event.quantityAvailable())
+                    )
+                    .forEach(order -> {
+                        order.setStatus(OrderStatus.PENDING);
+                        order.getOrderHistory().add(new OrderHistory(order, OrderStatus.PENDING, LocalDateTime.now()));
+                        order.setUpdatedAt(LocalDateTime.now());
+                    });
+
+            if (!affectedOrders.getContent().isEmpty()) {
+                orderDao.saveAllOrders(affectedOrders.getContent());
             }
-        }
+
+            pageable = PageRequest.of(pageable.getPageNumber() + 1, pageable.getPageSize());
+        } while (!affectedOrders.isLast());
     }
 
     public void handleDeliveryCompletedEvent(DeliveryCompletedEvent event) {

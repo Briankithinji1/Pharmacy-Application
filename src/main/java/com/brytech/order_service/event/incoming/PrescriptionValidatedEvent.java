@@ -7,3 +7,11 @@ public record PrescriptionValidatedEvent(
         Long prescriptionId,
         Instant validatedAt
 ) {}
+
+
+/* TODO: CHANGE TO PRESCRIPTIONVERIFIEDEVENT 
+ * - Received from the PHARMACISTSERVICE
+ * - Should include prescriptionId, pharmacistId, verificationTimestamp, 
+ *   medicationList (extracted from prescription or selected by pharmacist), 
+ *   verificationStatus = "VERIFIED"
+ */

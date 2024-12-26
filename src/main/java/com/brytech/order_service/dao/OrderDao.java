@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 public interface OrderDao {
 
     Order saveOrder(Order order);
+    void saveAllOrders(List<Order> order);
     Page<Order> findAllOrders(Pageable pageable);
     Optional<Order> findById(Long id);
     Optional<Order> findByOrderReference(String orderReference);
@@ -21,7 +22,8 @@ public interface OrderDao {
     List<Order> findByPaymentStatus(PaymentStatus paymentStatus);
     void deleteOrder(Long id);
     boolean existById(Long id);
+    boolean existsByOrderReference(String orderReference);
     long countOrders();
 
-    List<Order> findPendingOrdersByProductId(Long productId, OrderStatus status);
+    Page<Order> findPendingOrdersByProductId(Long productId, OrderStatus status, Pageable pageable);
 }

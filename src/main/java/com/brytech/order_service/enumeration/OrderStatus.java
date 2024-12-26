@@ -1,5 +1,8 @@
 package com.brytech.order_service.enumeration;
 
+import lombok.Getter;
+
+@Getter
 public enum OrderStatus {
     PENDING("PENDING"),
     ACCEPTED("ACCEPTED"),
@@ -23,7 +26,4 @@ public enum OrderStatus {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
 }
