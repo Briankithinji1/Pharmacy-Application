@@ -10,6 +10,8 @@ import com.brytech.cart_service.dto.CartItemDTO;
 import com.brytech.cart_service.enumeration.CartStatus;
 import com.brytech.cart_service.event.CartEventPublisher;
 import com.brytech.cart_service.event.ItemAddedToCartEvent;
+import com.brytech.cart_service.event.ItemUpdatedInCartEvent;
+import com.brytech.cart_service.event.consumed.CustomerCreatedEvent;
 import com.brytech.cart_service.event.consumed.ProductCreatedEvent;
 import com.brytech.cart_service.exception.RequestValidationException;
 import com.brytech.cart_service.exception.ResourceNotFoundException;
@@ -20,7 +22,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CartItemService {
@@ -30,12 +34,18 @@ public class CartItemService {
     private final ModelMapper mapper;
     private final CartEventPublisher eventPublisher;
     private final ProductCacheService productCacheService;
+    private final CustomerCacheService customerCacheService;
 
     public CartItemDTO addItemToCart(Long customerId, CartItemDTO cartItemDTO) {
-        Cart cart = cartDao.findByCustomerId(customerId)
+        CustomerCreatedEvent customer = customerCacheService.getCustomerById(customerId);
+        if (customerId == null) {
+            throw new ResourceNotFoundException(String.format("Customer with ID [%s] not found", customerId));
+        }
+
+        Cart cart = cartDao.findByCustomerId(customer.customerId())
             .orElseGet(() -> {
                 Cart newCart = new Cart();
-                newCart.setCustomerId(customerId);
+                newCart.setCustomerId(customer.customerId());
                 newCart.setCreatedAt(Instant.now());
                 newCart.setUpdatedAt(Instant.now());
                 newCart.setTotalPrice(BigDecimal.ZERO);
@@ -45,7 +55,7 @@ public class CartItemService {
 
         ProductCreatedEvent product = productCacheService.getProductById(cartItemDTO.productId());
         if (product == null) {
-            throw new ResourceNotFoundException("Product with ID [%s] not found".formatted(cartItemDTO.productId()));
+            throw new ResourceNotFoundException(String.format("Product with ID [%s] not found", cartItemDTO.productId()));
         }
 
         BigDecimal price = product.price();
@@ -62,11 +72,7 @@ public class CartItemService {
         CartItem savedItem = itemDao.save(cartItem);
 
         // Update total price
-        cart.setTotalPrice(cart.getCartItems()
-                .stream()
-                .map(item -> item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add));
-        cart.setUpdatedAt(now);
+        updateCartTotalPrice(cart);
         cartDao.save(cart);
 
         ItemAddedToCartEvent event = new ItemAddedToCartEvent(
@@ -83,6 +89,11 @@ public class CartItemService {
     public CartItemDTO updateCartItem(Long customerId, Long cartItemId, int newQuantity) {
         if (newQuantity <= 0) {
             throw new RequestValidationException("Quantity must be greater than zero.");
+        }
+
+        CustomerCreatedEvent customer = customerCacheService.getCustomerById(customerId);
+        if (customer == null) {
+            throw new ResourceNotFoundException(String.format("Customer with ID [%s] not found", customerId));
         }
         
         Cart cart = cartDao.findByCustomerId(customerId)
@@ -105,10 +116,27 @@ public class CartItemService {
 
         updateCartTotalPrice(cart);
 
+        try {
+            ItemUpdatedInCartEvent event = new ItemUpdatedInCartEvent(
+                    cart.getCartId(),
+                    cartItem.getCartItemId(),
+                    cartItem.getProductId(),
+                    cartItem.getQuantity(),
+                    Instant.now());
+            eventPublisher.publishItemUpdatedInCartEvent(event);
+        } catch (Exception e) {
+            log.error("Failed to publish ItemUpdatedInCartEvent for cartItemId: {}", cartItemId, e);
+        }
+
         return toCartItemDTO(updatedItem);
     }
    
     public void removeCartItem(Long customerId, Long cartItemId) {
+        CustomerCreatedEvent customer = customerCacheService.getCustomerById(customerId);
+        if (customer == null) {
+            throw new ResourceNotFoundException(String.format("Customer with ID [%s] not found", customerId));
+        }
+
         Cart cart = cartDao.findByCustomerId(customerId)
             .orElseThrow(() -> new ResourceNotFoundException(
                         "Cart with user ID [%s] not found".formatted(customerId)
@@ -129,6 +157,7 @@ public class CartItemService {
     }
 
     private void updateCartTotalPrice(Cart cart) {
+        // Calculate and update the cart's total price
         BigDecimal totalPrice = cart.getCartItems()
             .stream()
             .map(item -> item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))

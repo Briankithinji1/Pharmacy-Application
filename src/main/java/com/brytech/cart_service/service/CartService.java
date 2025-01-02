@@ -9,6 +9,7 @@ import com.brytech.cart_service.dto.CartItemDTO;
 import com.brytech.cart_service.enumeration.CartStatus;
 import com.brytech.cart_service.event.CartCreatedEvent;
 import com.brytech.cart_service.event.CartEventPublisher;
+import com.brytech.cart_service.event.consumed.CustomerCreatedEvent;
 import com.brytech.cart_service.exception.RequestValidationException;
 import com.brytech.cart_service.exception.ResourceNotFoundException;
 import com.brytech.cart_service.model.Cart;
@@ -31,15 +32,21 @@ public class CartService {
     private final CartDao cartDao;
     private final ModelMapper mapper;
     private final CartEventPublisher eventPublisher;
+    private final CustomerCacheService customerCacheService;
    
     @Transactional
     public CartDTO createCart(Long customerId) {
-        if (cartDao.existsByCustomerIdAndCartStatus(customerId, CartStatus.ACTIVE)) {
+        CustomerCreatedEvent customer = customerCacheService.getCustomerById(customerId);
+        if (customerId == null) {
+            throw new ResourceNotFoundException(String.format("Customer with ID [%s] not found", customerId));
+        }
+
+        if (cartDao.existsByCustomerIdAndCartStatus(customer.customerId(), CartStatus.ACTIVE)) {
             throw new RequestValidationException("Customer already has an active cart");
         }
 
         Cart newCart = new Cart();
-        newCart.setCustomerId(customerId);
+        newCart.setCustomerId(customer.customerId());
         newCart.setCartStatus(CartStatus.ACTIVE);
         newCart.setCreatedAt(Instant.now());
         newCart.setUpdatedAt(Instant.now());
@@ -47,7 +54,7 @@ public class CartService {
         Cart savedCart = cartDao.save(newCart);
 
         CartCreatedEvent event = new CartCreatedEvent(
-                newCart.getCartId(), 
+                savedCart.getCartId(), 
                 savedCart.getCustomerId(), 
                 Instant.now());
         try {

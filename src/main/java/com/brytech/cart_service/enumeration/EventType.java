@@ -3,6 +3,7 @@ package com.brytech.cart_service.enumeration;
 public enum EventType {
     CART_CREATED,
     ITEM_ADDED_TO_CART,
+    ITEM_UPDATED_IN_CART,
     ITEM_REMOVED_FROM_CART,
     CART_ITEM_QUANTITY_UPDATED,
     CART_CLEARED,

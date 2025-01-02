@@ -1,9 +1,13 @@
 package com.brytech.cart_service.route;
 
+import com.brytech.cart_service.event.consumed.CustomerCreatedEvent;
+import com.brytech.cart_service.event.consumed.CustomerDeletedEvent;
+import com.brytech.cart_service.event.consumed.CustomerUpdatedEvent;
 import com.brytech.cart_service.event.consumed.ProductCreatedEvent;
 import com.brytech.cart_service.event.consumed.ProductDeletedEvent;
 import com.brytech.cart_service.event.consumed.ProductUpdatedEvent;
 import com.brytech.cart_service.exception.RequestValidationException;
+import com.brytech.cart_service.service.CustomerCacheService;
 import com.brytech.cart_service.service.ProductCacheService;
 
 import org.apache.camel.Exchange;
@@ -17,9 +21,11 @@ import org.springframework.stereotype.Component;
 public class EventConsumerRoute extends RouteBuilder {
 
     private final ProductCacheService productCacheService;
+    private final CustomerCacheService customerCacheService;
 
-    public EventConsumerRoute(ProductCacheService productCacheService) {
+    public EventConsumerRoute(ProductCacheService productCacheService, CustomerCacheService customerCacheService) {
         this.productCacheService = productCacheService;
+        this.customerCacheService = customerCacheService;
     }
 
     @Value("${kafka.topic.product-created}")
@@ -30,6 +36,16 @@ public class EventConsumerRoute extends RouteBuilder {
 
     @Value("${kafka.topic.product-deleted}")
     private String productDeletedTopic;
+
+    @Value("${kafka.topic.customer-created}")
+    private String customerCreatedTopic;
+
+    @Value("${kafka.topic.customer-updated}")
+    private String customerUpdatedTopic;
+
+    @Value("${kafka.topic.customer-deleted}")
+    private String customerDeletedTopic;
+
 
     @Override
     public void configure() throws Exception {
@@ -65,7 +81,7 @@ public class EventConsumerRoute extends RouteBuilder {
                 productCacheService.updateProductInCache(event.productId(), event);
             })
             .log("Successfully processed ProductUpdateEvent with productId: ${body.productId}")
-            .to("log:productUpdatedEvent?level=INFO");
+            .to("log:productUpdatedEventProcessed?level=INFO");
 
 
         from("kafka:" + productDeletedTopic)
@@ -77,5 +93,36 @@ public class EventConsumerRoute extends RouteBuilder {
             })
             .log("Successfully processed ProductDeletedEvent with productId: ${body.productId}")
             .to("log:productDeletedEventProcessed?level=INFO");
+
+
+        from("kafka:" + customerCreatedTopic)
+            .unmarshal().json(JsonLibrary.Jackson, CustomerCreatedEvent.class)
+            .routeId("customer-created-consumer")
+            .process(exchange -> {
+                CustomerCreatedEvent event = exchange.getIn().getBody(CustomerCreatedEvent.class);
+                customerCacheService.addCustomerToCache(event.customerId(), event);
+            })
+            .log("Successfully processed CustomerCreatedEvent with customerId: ${body.customerId}")
+            .to("log:customerCreatedEventProcessed?level=INFO");
+
+        from("kafka:" + customerUpdatedTopic)
+            .unmarshal().json(JsonLibrary.Jackson, CustomerUpdatedEvent.class)
+            .routeId("customer-updated-consumer")
+            .process(exchange -> {
+                CustomerUpdatedEvent event = exchange.getIn().getBody(CustomerUpdatedEvent.class);
+                customerCacheService.updateCustomerInCache(event.customerId(), event);
+            })
+            .log("Successfully processed CustomerUpdatedEvent with customerId: ${body.customerId}")
+            .to("log:customerUpdatedEventProcessed?level=INFO");
+
+        from("kafka:" + customerDeletedTopic)
+            .unmarshal().json(JsonLibrary.Jackson, CustomerDeletedEvent.class)
+            .routeId("customer-deleted-consumer")
+            .process(exchange -> {
+                CustomerDeletedEvent event = exchange.getIn().getBody(CustomerDeletedEvent.class);
+                customerCacheService.removeCustomerFromCache(event.customerId());
+            })
+            .log("Successfully processed CustomerDeletedEvent with customerId: ${body.customerId}")
+            .to("log:customerDeletedEventProcessed?level=INFO");
     } 
 }

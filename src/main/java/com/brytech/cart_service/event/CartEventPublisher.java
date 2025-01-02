@@ -31,6 +31,10 @@ public class CartEventPublisher {
         publishEvent(event, "Cart", EventType.ITEM_ADDED_TO_CART);
     }
 
+    public void publishItemUpdatedInCartEvent(ItemUpdatedInCartEvent event) {
+        publishEvent(event, "Cart", EventType.ITEM_UPDATED_IN_CART);
+    }
+
     public void publishItemRemovedFromCartEvent(ItemRemovedFromCartEvent event) {
         publishEvent(event, "Cart", EventType.ITEM_REMOVED_FROM_CART);
     }

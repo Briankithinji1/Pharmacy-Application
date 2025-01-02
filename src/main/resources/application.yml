@@ -61,6 +61,9 @@ kafka:
     product-created: product.created
     product-updated: product.updated
     product-deleted: product.deleted
+    customer-created: customer.created
+    customer-updated: customer.updated
+    customer-deleted: customer.deleted
       
 logging:
   level:
